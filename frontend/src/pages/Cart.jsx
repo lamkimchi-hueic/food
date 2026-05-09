@@ -12,7 +12,7 @@ export default function Cart() {
     const [receiver, setReceiver] = useState(''); // This will now hold the phone number for the first field
     const [address, setAddress] = useState('');
     const [submitting, setSubmitting] = useState(false);
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
     const navigate = useNavigate();
 
     const reload = () => setCart(getCart());
@@ -23,13 +23,13 @@ export default function Cart() {
         return () => window.removeEventListener('cart-updated', reload);
     }, []);
 
-    // Pre-fill receiver name and phone from logged-in user
+    // Pre-fill receiver name and phone from logged-in user once loading is finished
     useEffect(() => {
-        if (user) {
-            if (!receiver) setReceiver(user.phone || '');
-            if (!address) setAddress(user.address || '');
+        if (!loading && user) {
+            if (user.phone && !receiver) setReceiver(user.phone);
+            if (user.address && !address) setAddress(user.address);
         }
-    }, [user]);
+    }, [user, loading, receiver, address]);
 
     const total = cart.reduce((s, i) => s + i.price * i.amount, 0);
     const count = cart.reduce((s, i) => s + i.amount, 0);
