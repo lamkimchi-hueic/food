@@ -41,7 +41,17 @@ export function clearCart() {
 }
 
 export function getImageUrl(img) {
-    if (!img) return '/storage/products/JLjycLfZsULUhhGSG7uLXduGl7N8kBNVzpmkIu6x.jpg';
+    if (!img) return getBackendUrl('/storage/products/JLjycLfZsULUhhGSG7uLXduGl7N8kBNVzpmkIu6x.jpg');
     if (img.startsWith('http')) return img;
-    return `/storage/${img}`;
+    return getBackendUrl(`/storage/${img}`);
+}
+
+function getBackendUrl(path) {
+    const apiUrl = import.meta.env.VITE_API_URL || '';
+    if (apiUrl) {
+        // Remove '/api' from the end to get backend base URL
+        const backendBase = apiUrl.replace(/\/api\/?$/, '');
+        return backendBase + path;
+    }
+    return path;
 }
