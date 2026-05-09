@@ -51,4 +51,5 @@ EXPOSE 8000
 # Render sets the PORT environment variable automatically
 CMD php artisan config:clear && \
     php artisan route:clear && \
+    php artisan storage:link 2>/dev/null || true && \
     php artisan serve --host=0.0.0.0 --port=${PORT:-8000}

@@ -40,7 +40,7 @@ export default function Home() {
                     </div>
                     <div className="flex justify-end relative mt-10 lg:mt-0">
                         <div className="w-80 h-80 md:w-[28rem] md:h-[28rem] bg-gray-800 rounded-full overflow-hidden border-4 border-[#1A1A1E] shadow-[0_0_50px_rgba(255,102,0,0.15)] relative">
-                            <img src="/storage/products/JLjycLfZsULUhhGSG7uLXduGl7N8kBNVzpmkIu6x.jpg" alt="Signature" className="w-full h-full object-cover" />
+                            <img src={getImageUrl(null)} alt="Signature" className="w-full h-full object-cover" />
                         </div>
                         <div className="absolute top-10 right-0 bg-[#FF6600]/10 backdrop-blur-md px-6 py-3 rounded-2xl border border-[#FF6600]/20 flex items-center space-x-3">
                             <div className="w-2 h-2 bg-[#FF6600] rounded-full"></div>
