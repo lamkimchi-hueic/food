@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\AnalyticsController;
+use Illuminate\Support\Facades\Http;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,22 @@ use App\Http\Controllers\Api\AnalyticsController;
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::get('/categories', [CategoryController::class, 'index']);
+
+// Diagnostic endpoint - shows current Python API URL config and connection test
+Route::get('/_debug/python', function () {
+    $url = rtrim(env('PYTHON_API_URL', 'http://localhost:8001'), '/');
+    $endpoint = '/api/analysis/customer-interest';
+    $result = ['python_api_url' => $url, 'test_url' => $url . $endpoint];
+    try {
+        $response = Http::timeout(60)->connectTimeout(60)->get($url . $endpoint);
+        $result['status'] = $response->status();
+        $result['successful'] = $response->successful();
+        $result['body_preview'] = substr($response->body(), 0, 300);
+    } catch (\Throwable $e) {
+        $result['error'] = $e->getMessage();
+    }
+    return response()->json($result);
+});
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
