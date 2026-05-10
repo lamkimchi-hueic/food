@@ -110,6 +110,8 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
+                </section>
+
                 {/* Newsletter Section */}
                 <section className="relative py-32 overflow-hidden group">
                     <div className="absolute inset-0 z-0">
