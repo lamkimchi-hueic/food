@@ -4,10 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    protected $imageService;
+
+    public function __construct(ImageUploadService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
+
     public function index()
     {
         return response()->json(Category::all());
@@ -21,13 +29,13 @@ class CategoryController extends Controller
             'img' => 'nullable|image|max:2048',
         ]);
 
-        unset($validated['img']);
+        if ($request->hasFile('img')) {
+            $validated['img'] = $this->imageService->upload($request->file('img'), 'categories');
+        } else {
+            unset($validated['img']);
+        }
 
         $category = Category::create($validated);
-
-        if ($request->hasFile('img')) {
-            $category->addMediaFromRequest('img')->toMediaCollection('images');
-        }
 
         return response()->json($category, 201);
     }
@@ -45,20 +53,21 @@ class CategoryController extends Controller
             'img' => 'nullable|image|max:2048',
         ]);
 
-        unset($validated['img']);
+        if ($request->hasFile('img')) {
+            $this->imageService->delete($category->img);
+            $validated['img'] = $this->imageService->upload($request->file('img'), 'categories');
+        } else {
+            unset($validated['img']);
+        }
 
         $category->update($validated);
 
-        if ($request->hasFile('img')) {
-            $category->clearMediaCollection('images');
-            $category->addMediaFromRequest('img')->toMediaCollection('images');
-        }
-
-        return response()->json($category);
+        return response()->json($category->fresh());
     }
 
     public function destroy(Category $category)
     {
+        $this->imageService->delete($category->img);
         $category->delete();
         return response()->noContent();
     }

@@ -39,15 +39,14 @@ class Product extends Model implements HasMedia
 
     public function getMediaUrlAttribute(): ?string
     {
-        $media = $this->getFirstMedia('images');
-        if ($media) {
-            return $media->getFullUrl();
-        }
-        // Fallback to old img column
         if ($this->img) {
+            if (Str::startsWith($this->img, ['http://', 'https://'])) {
+                return $this->img;
+            }
             return url('storage/' . $this->img);
         }
-        return null;
+        $media = $this->getFirstMedia('images');
+        return $media ? $media->getFullUrl() : null;
     }
 
     public function getRouteKeyName()

@@ -4,10 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    protected $imageService;
+
+    public function __construct(ImageUploadService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
+
     public function index(Request $request)
     {
         $query = Product::with('category');
@@ -46,14 +54,13 @@ class ProductController extends Controller
             'price' => 'required|numeric',
         ]);
 
-        // Remove img from validated data (MediaLibrary handles it)
-        unset($validated['img']);
+        if ($request->hasFile('img')) {
+            $validated['img'] = $this->imageService->upload($request->file('img'), 'products');
+        } else {
+            unset($validated['img']);
+        }
 
         $product = Product::create($validated);
-
-        if ($request->hasFile('img')) {
-            $product->addMediaFromRequest('img')->toMediaCollection('images');
-        }
 
         return response()->json($product->load('category'), 201);
     }
@@ -70,21 +77,22 @@ class ProductController extends Controller
             'price' => 'required|numeric',
         ]);
 
-        unset($validated['img']);
+        if ($request->hasFile('img')) {
+            $this->imageService->delete($product->img);
+            $validated['img'] = $this->imageService->upload($request->file('img'), 'products');
+        } else {
+            unset($validated['img']);
+        }
 
         $product->update($validated);
 
-        if ($request->hasFile('img')) {
-            $product->clearMediaCollection('images');
-            $product->addMediaFromRequest('img')->toMediaCollection('images');
-        }
-
-        return response()->json($product->load('category'));
+        return response()->json($product->fresh()->load('category'));
     }
 
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
+        $this->imageService->delete($product->img);
         $product->delete();
         return response()->noContent();
     }

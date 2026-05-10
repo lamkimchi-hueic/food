@@ -39,14 +39,15 @@ class Category extends Model implements HasMedia
 
     public function getMediaUrlAttribute(): ?string
     {
-        $media = $this->getFirstMediaUrl('images');
-        if ($media) {
-            return $media;
-        }
         if ($this->img) {
+            // Full URL (Cloudinary or external)
+            if (Str::startsWith($this->img, ['http://', 'https://'])) {
+                return $this->img;
+            }
             return asset('storage/' . $this->img);
         }
-        return null;
+        $media = $this->getFirstMediaUrl('images');
+        return $media ?: null;
     }
 
     public function getRouteKeyName()
