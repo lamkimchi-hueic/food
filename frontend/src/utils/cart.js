@@ -41,14 +41,22 @@ export function clearCart() {
 }
 
 export function getImageUrl(item) {
-    // If item is an object with media_url (from MediaLibrary)
+    // If item is an object with media_url (from Spatie MediaLibrary)
     if (item && typeof item === 'object' && item.media_url) {
         return item.media_url;
     }
-    // If item is a string (legacy img path)
+    
+    // Legacy path check
     const img = typeof item === 'string' ? item : (item?.img || null);
-    if (!img) return getBackendUrl('/storage/products/JLjycLfZsULUhhGSG7uLXduGl7N8kBNVzpmkIu6x.jpg');
+    
+    // If no image, return a high-quality placeholder from Unsplash
+    if (!img) {
+        return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000&auto=format&fit=crop';
+    }
+
     if (img.startsWith('http')) return img;
+    
+    // Return backend storage URL
     return getBackendUrl(`/storage/${img}`);
 }
 
