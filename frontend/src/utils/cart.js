@@ -62,16 +62,17 @@ export function getImageUrl(item) {
     return getBackendUrl(`/storage/${img}`);
 }
 
-// Fix URLs that point to localhost instead of the real backend
+// Fix URLs that point to localhost/127.0.0.1 to either real backend (prod) or relative (dev for Vite proxy)
 function fixBackendUrl(url) {
     if (!url) return url;
     const apiUrl = import.meta.env.VITE_API_URL || '';
+    const localPattern = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/;
     if (apiUrl) {
         const backendBase = apiUrl.replace(/\/api\/?$/, '');
-        // Replace http://localhost or http://localhost:8000 with real backend URL
-        return url.replace(/^https?:\/\/localhost(:\d+)?/, backendBase);
+        return url.replace(localPattern, backendBase);
     }
-    return url;
+    // Dev mode: strip the host so /storage/... goes through Vite proxy
+    return url.replace(localPattern, '');
 }
 
 function getBackendUrl(path) {
