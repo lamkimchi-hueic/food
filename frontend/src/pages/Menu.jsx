@@ -19,6 +19,10 @@ export default function Menu() {
     }, []);
 
     useEffect(() => {
+        setSearch(searchParams.get('search') || '');
+    }, [searchParams]);
+
+    useEffect(() => {
         const params = new URLSearchParams();
         if (activeCategory) params.set('category', activeCategory);
         if (searchParams.get('search')) params.set('search', searchParams.get('search'));
