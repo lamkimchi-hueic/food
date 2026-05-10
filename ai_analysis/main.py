@@ -14,12 +14,39 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Kết nối database MySQL (dùng chung DB với Laravel backend)
+# Kết nối database (dùng chung DB với Laravel backend)
+# Hỗ trợ cả MySQL (local dev) và PostgreSQL (Neon production)
 DATABASE_URL = os.environ.get(
     "DATABASE_URL",
     "mysql+pymysql://root:123456@127.0.0.1:3306/food"
 )
-engine = create_engine(DATABASE_URL, echo=False)
+
+# Normalize DATABASE_URL for SQLAlchemy:
+# - postgres://... -> postgresql+psycopg2://...
+# - postgresql://... -> postgresql+psycopg2://...
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+psycopg2://", 1)
+elif DATABASE_URL.startswith("postgresql://") and "+psycopg2" not in DATABASE_URL:
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+psycopg2://", 1)
+
+IS_POSTGRES = DATABASE_URL.startswith("postgresql")
+
+engine = create_engine(DATABASE_URL, echo=False, pool_pre_ping=True)
+
+
+@app.get("/")
+def health():
+    return {"status": "ok", "service": "Food Analysis API", "db": "postgres" if IS_POSTGRES else "mysql"}
+
+
+@app.get("/health")
+def health2():
+    try:
+        with engine.connect() as conn:
+            conn.exec_driver_sql("SELECT 1")
+        return {"status": "ok", "db": "connected"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 
 @app.get("/api/analysis/customer-interest")
@@ -117,15 +144,20 @@ def get_order_trends():
 @app.get("/api/analysis/top-customers")
 def get_top_customers():
     """Phân tích khách hàng đặt hàng nhiều nhất"""
-    query = """
+    if IS_POSTGRES:
+        last_order_expr = "to_char(MAX(o.created_at), 'YYYY-MM-DD HH24:MI:SS')"
+    else:
+        last_order_expr = "DATE_FORMAT(MAX(o.created_at), '%%Y-%%m-%%d %%H:%%i:%%s')"
+
+    query = f"""
         SELECT
             u.id as user_id,
             u.name as customer_name,
             u.username,
             COUNT(DISTINCT o.id) as total_orders,
-            CAST(COALESCE(SUM(oi.amount), 0) AS UNSIGNED) as total_items,
-            CAST(COALESCE(SUM(oi.amount * p.price), 0) AS DECIMAL(10,2)) as total_revenue,
-            DATE_FORMAT(MAX(o.created_at), '%%Y-%%m-%%d %%H:%%i:%%s') as last_order_at
+            COALESCE(SUM(oi.amount), 0) as total_items,
+            COALESCE(SUM(oi.amount * p.price), 0) as total_revenue,
+            {last_order_expr} as last_order_at
         FROM users u
         LEFT JOIN orders o ON u.id = o.user_id
         LEFT JOIN order_items oi ON o.id = oi.order_id
@@ -134,10 +166,12 @@ def get_top_customers():
         ORDER BY total_revenue DESC
     """
     df = pd.read_sql(query, engine)
+    df["total_items"] = df["total_items"].fillna(0).astype(int)
     df["total_revenue"] = df["total_revenue"].fillna(0).astype(float)
-    df["avg_order_value"] = (df["total_revenue"] / df["total_orders"]).fillna(0).round(2)
+    df["avg_order_value"] = (df["total_revenue"] / df["total_orders"].replace(0, 1)).fillna(0).round(2)
     return df.to_dict(orient="records")
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    port = int(os.environ.get("PORT", 8001))
+    uvicorn.run(app, host="0.0.0.0", port=port)
