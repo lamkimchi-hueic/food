@@ -15,6 +15,8 @@ class Product extends Model implements HasMedia
 
     protected $fillable = ['img', 'name', 'slug', 'desc', 'price', 'category_id'];
 
+    protected $appends = ['media_url'];
+
     protected static function booted()
     {
         static::creating(function ($product) {
@@ -28,6 +30,24 @@ class Product extends Model implements HasMedia
                 $product->slug = Str::slug($product->name);
             }
         });
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('images')->singleFile();
+    }
+
+    public function getMediaUrlAttribute(): ?string
+    {
+        $media = $this->getFirstMediaUrl('images');
+        if ($media) {
+            return $media;
+        }
+        // Fallback to old img column
+        if ($this->img) {
+            return asset('storage/' . $this->img);
+        }
+        return null;
     }
 
     public function getRouteKeyName()

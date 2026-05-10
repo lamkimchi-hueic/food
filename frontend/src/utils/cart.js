@@ -40,7 +40,13 @@ export function clearCart() {
     window.dispatchEvent(new Event('cart-updated'));
 }
 
-export function getImageUrl(img) {
+export function getImageUrl(item) {
+    // If item is an object with media_url (from MediaLibrary)
+    if (item && typeof item === 'object' && item.media_url) {
+        return item.media_url;
+    }
+    // If item is a string (legacy img path)
+    const img = typeof item === 'string' ? item : (item?.img || null);
     if (!img) return getBackendUrl('/storage/products/JLjycLfZsULUhhGSG7uLXduGl7N8kBNVzpmkIu6x.jpg');
     if (img.startsWith('http')) return img;
     return getBackendUrl(`/storage/${img}`);
@@ -49,7 +55,6 @@ export function getImageUrl(img) {
 function getBackendUrl(path) {
     const apiUrl = import.meta.env.VITE_API_URL || '';
     if (apiUrl) {
-        // Remove '/api' from the end to get backend base URL
         const backendBase = apiUrl.replace(/\/api\/?$/, '');
         return backendBase + path;
     }

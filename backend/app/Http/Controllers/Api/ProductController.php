@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -47,11 +46,14 @@ class ProductController extends Controller
             'price' => 'required|numeric',
         ]);
 
-        if ($request->hasFile('img')) {
-            $validated['img'] = $request->file('img')->store('products', 'public');
-        }
+        // Remove img from validated data (MediaLibrary handles it)
+        unset($validated['img']);
 
         $product = Product::create($validated);
+
+        if ($request->hasFile('img')) {
+            $product->addMediaFromRequest('img')->toMediaCollection('images');
+        }
 
         return response()->json($product->load('category'), 201);
     }
@@ -66,14 +68,14 @@ class ProductController extends Controller
             'price' => 'required|numeric',
         ]);
 
-        if ($request->hasFile('img')) {
-            if ($product->img && Storage::disk('public')->exists($product->img)) {
-                Storage::disk('public')->delete($product->img);
-            }
-            $validated['img'] = $request->file('img')->store('products', 'public');
-        }
+        unset($validated['img']);
 
         $product->update($validated);
+
+        if ($request->hasFile('img')) {
+            $product->clearMediaCollection('images');
+            $product->addMediaFromRequest('img')->toMediaCollection('images');
+        }
 
         return response()->json($product->load('category'));
     }

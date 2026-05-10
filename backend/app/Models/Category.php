@@ -15,6 +15,8 @@ class Category extends Model implements HasMedia
 
     protected $fillable = ['name', 'slug', 'desc', 'img'];
 
+    protected $appends = ['media_url'];
+
     protected static function booted()
     {
         static::creating(function ($category) {
@@ -28,6 +30,23 @@ class Category extends Model implements HasMedia
                 $category->slug = Str::slug($category->name);
             }
         });
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('images')->singleFile();
+    }
+
+    public function getMediaUrlAttribute(): ?string
+    {
+        $media = $this->getFirstMediaUrl('images');
+        if ($media) {
+            return $media;
+        }
+        if ($this->img) {
+            return asset('storage/' . $this->img);
+        }
+        return null;
     }
 
     public function getRouteKeyName()

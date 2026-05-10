@@ -16,7 +16,7 @@ export default function Detail() {
 
     if (!product) return <div className="flex items-center justify-center min-h-screen"><div className="text-gray-400">Loading...</div></div>;
 
-    const imageUrl = getImageUrl(product.img);
+    const imageUrl = getImageUrl(product);
 
     const handleAdd = () => {
         const name = addToCart(product.id, product.name, product.price, imageUrl);

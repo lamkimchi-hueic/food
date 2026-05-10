@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -22,12 +21,13 @@ class CategoryController extends Controller
             'img' => 'nullable|image|max:2048',
         ]);
 
-        if ($request->hasFile('img')) {
-            $path = $request->file('img')->store('categories', 'public');
-            $validated['img'] = $path;
-        }
+        unset($validated['img']);
 
         $category = Category::create($validated);
+
+        if ($request->hasFile('img')) {
+            $category->addMediaFromRequest('img')->toMediaCollection('images');
+        }
 
         return response()->json($category, 201);
     }
@@ -45,15 +45,14 @@ class CategoryController extends Controller
             'img' => 'nullable|image|max:2048',
         ]);
 
-        if ($request->hasFile('img')) {
-            if ($category->img && Storage::disk('public')->exists($category->img)) {
-                Storage::disk('public')->delete($category->img);
-            }
-            $path = $request->file('img')->store('categories', 'public');
-            $validated['img'] = $path;
-        }
+        unset($validated['img']);
 
         $category->update($validated);
+
+        if ($request->hasFile('img')) {
+            $category->clearMediaCollection('images');
+            $category->addMediaFromRequest('img')->toMediaCollection('images');
+        }
 
         return response()->json($category);
     }

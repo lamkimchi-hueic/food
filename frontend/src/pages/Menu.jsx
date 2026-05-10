@@ -45,7 +45,7 @@ export default function Menu() {
     };
 
     const handleAdd = (p) => {
-        const name = addToCart(p.id, p.name, p.price, getImageUrl(p.img));
+        const name = addToCart(p.id, p.name, p.price, getImageUrl(p));
         toast(name + ' added to cart!');
     };
 
@@ -75,7 +75,7 @@ export default function Menu() {
                     {products.map((product) => (
                         <div key={product.id} className="bg-[#1A1A1E] rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300 shadow-lg border border-gray-800/50 flex flex-col h-full hover:border-[#FF6600]/30 group">
                             <Link to={`/product/${product.id}`} className="h-48 overflow-hidden block">
-                                <img src={getImageUrl(product.img)} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                <img src={getImageUrl(product)} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
                             </Link>
                             <div className="p-6 flex flex-col flex-grow">
                                 <Link to={`/product/${product.id}`}><h3 className="text-xl font-bold mb-2">{product.name}</h3></Link>

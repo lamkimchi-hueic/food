@@ -16,7 +16,7 @@ export default function Home() {
     }, []);
 
     const handleAdd = (item) => {
-        const name = addToCart(item.id, item.name, item.price, getImageUrl(item.img));
+        const name = addToCart(item.id, item.name, item.price, getImageUrl(item));
         toast(name + ' added!');
     };
 
@@ -62,7 +62,7 @@ export default function Home() {
                         {trending.map((item) => (
                             <div key={item.id} className="bg-[#1A1A1E] rounded-[2rem] p-6 flex items-center space-x-6 hover:shadow-xl hover:shadow-[#FF6600]/10 transition duration-300 group cursor-pointer border border-transparent hover:border-[#FF6600]/20">
                                 <div className="w-32 h-32 rounded-2xl overflow-hidden flex-shrink-0">
-                                    <img src={getImageUrl(item.img)} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                    <img src={getImageUrl(item)} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
                                 </div>
                                 <div className="flex-grow w-full">
                                     <div className="text-xs text-[#FF6600] font-bold mb-2 uppercase tracking-wide">{item.category?.name || 'Featured'}</div>
@@ -88,7 +88,7 @@ export default function Home() {
                             {specials.map((s) => (
                                 <div key={s.id} className="bg-[#1A1A1E] border border-gray-800/50 rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300 flex flex-col group h-full cursor-pointer hover:border-[#FF6600]/30 shadow-lg relative">
                                     <div className="h-40 overflow-hidden">
-                                        <img src={getImageUrl(s.img)} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                        <img src={getImageUrl(s)} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
                                     </div>
                                     <div className="p-6 flex flex-col flex-grow">
                                         <h3 className="font-bold mb-2 line-clamp-1">{s.name}</h3>
@@ -109,6 +109,36 @@ export default function Home() {
                                 <h3 className="font-bold text-center text-[#FF6600] group-hover:text-black transition">Explore Full<br />Menu Collection</h3>
                             </div>
                         </div>
+                    </div>
+                {/* Newsletter Section */}
+                <section className="relative py-32 overflow-hidden group">
+                    <div className="absolute inset-0 z-0">
+                        <img 
+                            src="/newsletter-bg.png" 
+                            alt="Kitchen Background" 
+                            className="w-full h-full object-cover grayscale opacity-40 group-hover:scale-105 transition-transform duration-1000"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/40"></div>
+                    </div>
+                    
+                    <div className="relative z-10 max-w-4xl mx-auto px-10 text-center">
+                        <h2 className="text-5xl md:text-6xl font-black mb-6 tracking-tighter uppercase">Stay in the kitchen.</h2>
+                        <p className="text-gray-300 text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
+                            Join 25,000+ culinary enthusiasts. Receive exclusive recipes, chef interviews, and secret table bookings directly in your inbox.
+                        </p>
+                        
+                        <div className="flex flex-col sm:flex-row items-stretch justify-center max-w-md mx-auto mb-6 bg-[#1A1A1E] p-1 rounded-xl sm:rounded-full border border-gray-800">
+                            <input 
+                                type="email" 
+                                placeholder="Enter your email address" 
+                                className="bg-transparent border-none focus:ring-0 px-6 py-4 flex-grow text-white placeholder-gray-500"
+                            />
+                            <button className="bg-[#FF6600] hover:bg-orange-600 text-black font-black px-8 py-4 rounded-lg sm:rounded-full transition-all uppercase tracking-wider text-sm">
+                                Subscribe Now
+                            </button>
+                        </div>
+                        
+                        <p className="text-[10px] text-gray-500 font-bold tracking-[0.2em] uppercase">No spam. Only flavor.</p>
                     </div>
                 </section>
             </main>
