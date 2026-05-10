@@ -40,7 +40,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index']);
 
         Route::apiResource('categories', CategoryController::class)->except(['index']);
-        Route::apiResource('products', ProductController::class)->except(['index', 'show']);
+        Route::post('products', [ProductController::class, 'store']);
+        Route::put('products/{product}', [ProductController::class, 'update'])->where('product', '[0-9]+');
+        Route::delete('products/{product}', [ProductController::class, 'destroy'])->where('product', '[0-9]+');
         Route::apiResource('users', UserController::class);
         Route::apiResource('orders', OrderController::class);
 

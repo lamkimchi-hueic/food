@@ -58,8 +58,10 @@ class ProductController extends Controller
         return response()->json($product->load('category'), 201);
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
+        $product = Product::findOrFail($id);
+
         $validated = $request->validate([
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
@@ -80,8 +82,9 @@ class ProductController extends Controller
         return response()->json($product->load('category'));
     }
 
-    public function destroy(Product $product)
+    public function destroy($id)
     {
+        $product = Product::findOrFail($id);
         $product->delete();
         return response()->noContent();
     }
