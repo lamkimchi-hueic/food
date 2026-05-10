@@ -19,7 +19,7 @@ export default function AdminCategories() {
         load();
     }, [user]);
 
-    const load = () => api.get('/categories').then((r) => setCategories(r.data));
+    const load = () => api.get('/categories', { params: { _t: Date.now() } }).then((r) => setCategories(r.data));
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -98,7 +98,7 @@ export default function AdminCategories() {
                         <div key={cat.id} className="bg-[#1A1A1E] p-5 rounded-2xl border border-gray-800 flex items-center justify-between">
                             <div className="flex items-center space-x-4">
                                 {(cat.media_url || cat.img) && (
-                                    <img src={getImageUrl(cat)} alt={cat.name} className="w-16 h-16 rounded-xl object-cover border border-gray-700" onError={(e) => { e.target.style.display = 'none'; }} />
+                                    <img src={`${getImageUrl(cat)}?t=${cat.updated_at}`} alt={cat.name} className="w-16 h-16 rounded-xl object-cover border border-gray-700" onError={(e) => { e.target.style.display = 'none'; }} />
                                 )}
                                 <div>
                                     <h3 className="font-bold text-lg">{cat.name}</h3>
