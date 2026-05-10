@@ -11,7 +11,7 @@ export default function AdminCategories() {
     const [categories, setCategories] = useState([]);
     const [form, setForm] = useState({ name: '', desc: '' });
     const [imgFile, setImgFile] = useState(null);
-    const [editId, setEditId] = useState(null);
+    const [editSlug, setEditSlug] = useState(null);
     const [toast, setToast] = useState(null);
 
     useEffect(() => {
@@ -32,9 +32,9 @@ export default function AdminCategories() {
                 formData.append('img', imgFile);
             }
 
-            if (editId) {
+            if (editSlug) {
                 formData.append('_method', 'PUT');
-                await api.post(`/admin/categories/${editId}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+                await api.post(`/admin/categories/${editSlug}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
                 setToast({ type: 'success', message: 'Category updated successfully' });
             } else {
                 await api.post('/admin/categories', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
@@ -42,7 +42,7 @@ export default function AdminCategories() {
             }
             setForm({ name: '', desc: '' });
             setImgFile(null);
-            setEditId(null);
+            setEditSlug(null);
             load();
         } catch (err) {
             console.error('Category save error:', err.response?.data || err);
@@ -51,15 +51,15 @@ export default function AdminCategories() {
     };
 
     const handleEdit = (cat) => {
-        setEditId(cat.id);
+        setEditSlug(cat.slug);
         setForm({ name: cat.name, desc: cat.desc || '' });
         setImgFile(null);
     };
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (slug) => {
         if (!confirm('Delete this category?')) return;
         try {
-            await api.delete(`/admin/categories/${id}`);
+            await api.delete(`/admin/categories/${slug}`);
             setToast({ type: 'success', message: 'Category deleted successfully' });
             load();
         } catch (err) {
@@ -88,8 +88,8 @@ export default function AdminCategories() {
                         <input type="file" accept="image/*" onChange={(e) => setImgFile(e.target.files[0])} className="bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] transition w-full" />
                     </div>
                     <div className="md:col-span-2 flex space-x-2">
-                        <button type="submit" className="flex-grow bg-[#FF6600] text-black font-bold rounded-xl py-3 hover:bg-orange-600 transition">{editId ? 'Update' : 'Create'}</button>
-                        {editId && <button type="button" onClick={() => { setEditId(null); setForm({ name: '', desc: '' }); setImgFile(null); }} className="px-6 bg-gray-800 text-white rounded-xl hover:bg-gray-700 transition">Cancel</button>}
+                        <button type="submit" className="flex-grow bg-[#FF6600] text-black font-bold rounded-xl py-3 hover:bg-orange-600 transition">{editSlug ? 'Update' : 'Create'}</button>
+                        {editSlug && <button type="button" onClick={() => { setEditSlug(null); setForm({ name: '', desc: '' }); setImgFile(null); }} className="px-6 bg-gray-800 text-white rounded-xl hover:bg-gray-700 transition">Cancel</button>}
                     </div>
                 </form>
 
@@ -107,7 +107,7 @@ export default function AdminCategories() {
                             </div>
                             <div className="flex space-x-3">
                                 <button onClick={() => handleEdit(cat)} className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-[#FF6600] hover:text-black transition text-sm font-bold">Edit</button>
-                                <button onClick={() => handleDelete(cat.id)} className="px-4 py-2 bg-gray-800 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition text-sm font-bold">Delete</button>
+                                <button onClick={() => handleDelete(cat.slug)} className="px-4 py-2 bg-gray-800 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition text-sm font-bold">Delete</button>
                             </div>
                         </div>
                     ))}

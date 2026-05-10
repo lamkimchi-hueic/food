@@ -41,8 +41,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::apiResource('categories', CategoryController::class)->except(['index']);
         Route::post('products', [ProductController::class, 'store']);
-        Route::put('products/{product}', [ProductController::class, 'update'])->where('product', '[0-9]+');
-        Route::delete('products/{product}', [ProductController::class, 'destroy'])->where('product', '[0-9]+');
+        Route::put('products/{product}', [ProductController::class, 'update']);
+        Route::delete('products/{product}', [ProductController::class, 'destroy']);
         Route::apiResource('users', UserController::class);
         Route::apiResource('orders', OrderController::class);
 
