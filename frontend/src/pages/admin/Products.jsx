@@ -102,7 +102,7 @@ export default function AdminProducts() {
                     {products.map((p) => (
                         <div key={p.id} className="bg-[#1A1A1E] p-4 rounded-2xl border border-gray-800 flex items-center space-x-4">
                             <div className="w-16 h-16 rounded-xl overflow-hidden bg-gray-900 flex-shrink-0">
-                                <img src={getImageUrl(p.img)} className="w-full h-full object-cover" />
+                                <img src={getImageUrl(p)} className="w-full h-full object-cover" onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000&auto=format&fit=crop'; }} />
                             </div>
                             <div className="flex-grow">
                                 <h3 className="font-bold">{p.name}</h3>

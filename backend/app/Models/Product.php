@@ -39,13 +39,13 @@ class Product extends Model implements HasMedia
 
     public function getMediaUrlAttribute(): ?string
     {
-        $media = $this->getFirstMediaUrl('images');
+        $media = $this->getFirstMedia('images');
         if ($media) {
-            return $media;
+            return $media->getFullUrl();
         }
         // Fallback to old img column
         if ($this->img) {
-            return asset('storage/' . $this->img);
+            return url('storage/' . $this->img);
         }
         return null;
     }

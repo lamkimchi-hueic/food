@@ -41,23 +41,37 @@ export function clearCart() {
 }
 
 export function getImageUrl(item) {
+    const FALLBACK = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000&auto=format&fit=crop';
+
     // If item is an object with media_url (from Spatie MediaLibrary)
     if (item && typeof item === 'object' && item.media_url) {
-        return item.media_url;
+        return fixBackendUrl(item.media_url);
     }
     
     // Legacy path check
     const img = typeof item === 'string' ? item : (item?.img || null);
     
-    // If no image, return a high-quality placeholder from Unsplash
+    // If no image, return a high-quality placeholder
     if (!img) {
-        return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000&auto=format&fit=crop';
+        return FALLBACK;
     }
 
-    if (img.startsWith('http')) return img;
+    if (img.startsWith('http')) return fixBackendUrl(img);
     
     // Return backend storage URL
     return getBackendUrl(`/storage/${img}`);
+}
+
+// Fix URLs that point to localhost instead of the real backend
+function fixBackendUrl(url) {
+    if (!url) return url;
+    const apiUrl = import.meta.env.VITE_API_URL || '';
+    if (apiUrl) {
+        const backendBase = apiUrl.replace(/\/api\/?$/, '');
+        // Replace http://localhost or http://localhost:8000 with real backend URL
+        return url.replace(/^https?:\/\/localhost(:\d+)?/, backendBase);
+    }
+    return url;
 }
 
 function getBackendUrl(path) {
