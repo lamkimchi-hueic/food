@@ -93,11 +93,11 @@ export default function Orders() {
                                                 <h4 className="text-xs text-gray-500 font-black uppercase tracking-widest mb-4">Sản phẩm đã đặt</h4>
                                                 {order.order_items?.map((item, idx) => (
                                                     <div key={idx} className="flex items-center space-x-4 bg-[#141416] p-4 rounded-2xl border border-gray-800/50">
-                                                        <Link to={`/product/${item.product_id}`} className="w-12 h-12 rounded-xl overflow-hidden bg-gray-900 border border-gray-800 flex-shrink-0">
+                                                        <Link to={`/product/${item.product?.slug}`} className="w-12 h-12 rounded-xl overflow-hidden bg-gray-900 border border-gray-800 flex-shrink-0">
                                                             <img src={item.product?.media_url || "/storage/products/default.jpg"} className="w-full h-full object-cover" alt={item.product?.name} />
                                                         </Link>
                                                         <div className="flex-grow">
-                                                            <Link to={`/product/${item.product_id}`}><div className="font-bold text-sm line-clamp-1 hover:text-[#FF6600] transition">{item.product?.name}</div></Link>
+                                                            <Link to={`/product/${item.product?.slug}`}><div className="font-bold text-sm line-clamp-1 hover:text-[#FF6600] transition">{item.product?.name}</div></Link>
                                                             <div className="text-gray-500 text-xs">SL: {item.amount} &bull; {formatCurrency(item.product?.price || 0)} ea</div>
                                                         </div>
                                                         <div className="font-black text-[#FF6600] text-sm">{formatCurrency(item.amount * (item.product?.price || 0))}</div>

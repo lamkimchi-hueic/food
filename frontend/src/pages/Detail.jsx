@@ -7,12 +7,12 @@ import api from '../api';
 import { addToCart, getImageUrl, formatCurrency } from '../utils/cart';
 
 export default function Detail() {
-    const { id } = useParams();
+    const { slug } = useParams();
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
-        api.get(`/products/${id}`).then((r) => setProduct(r.data));
-    }, [id]);
+        api.get(`/products/${slug}`).then((r) => setProduct(r.data));
+    }, [slug]);
 
     if (!product) return <div className="flex items-center justify-center min-h-screen"><div className="text-gray-400">Đang tải...</div></div>;
 

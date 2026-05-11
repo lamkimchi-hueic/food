@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Http;
 |--------------------------------------------------------------------------
 */
 Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::get('/products/{product}', [ProductController::class, 'show']);
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/banners', [BannerController::class, 'index']);
 Route::get('/banners/{key}', [BannerController::class, 'show']);

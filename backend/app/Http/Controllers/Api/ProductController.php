@@ -42,10 +42,9 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
-    public function show($id)
+    public function show(Product $product)
     {
-        $product = Product::with('category')->findOrFail($id);
-        return response()->json($product);
+        return response()->json($product->load('category'));
     }
 
     public function store(Request $request)

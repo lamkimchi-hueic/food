@@ -77,7 +77,7 @@ export default function Menu() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
                     {products.map((product) => (
                         <div key={product.id} className="bg-[#1A1A1E] rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300 shadow-lg border border-gray-800/50 flex flex-col h-full hover:border-[#FF6600]/30 group">
-                            <Link to={`/product/${product.id}`} className="h-48 overflow-hidden block">
+                            <Link to={`/product/${product.slug}`} className="h-48 overflow-hidden block">
                                 <img 
                                     src={getImageUrl(product)} 
                                     className="w-full h-full object-cover group-hover:scale-110 transition duration-500" 
@@ -85,7 +85,7 @@ export default function Menu() {
                                 />
                             </Link>
                             <div className="p-6 flex flex-col flex-grow">
-                                <Link to={`/product/${product.id}`}><h3 className="text-xl font-bold mb-2">{product.name}</h3></Link>
+                                <Link to={`/product/${product.slug}`}><h3 className="text-xl font-bold mb-2">{product.name}</h3></Link>
                                 <p className="text-gray-400 text-sm mb-6 flex-grow">{product.desc?.substring(0, 60)}</p>
                                 <div className="flex justify-between items-center mt-auto">
                                     <span className="text-[#FF6600] font-bold text-xl">{formatCurrency(product.price)}</span>
