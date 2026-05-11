@@ -61,6 +61,7 @@ export default function Navbar() {
                 </Link>
                 {user ? (
                     <>
+                        <Link to="/orders" className={`text-sm font-bold ${isActive('/orders')}`}>My Orders</Link>
                         {user.role === 1 && (
                             <Link to="/admin" className="text-sm font-bold text-[#FF6600] hover:underline transition">Admin Panel</Link>
                         )}

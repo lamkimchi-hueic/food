@@ -8,6 +8,7 @@ import Blog from './pages/Blog';
 import About from './pages/About';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Orders from './pages/Orders';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminCategories from './pages/admin/Categories';
 import AdminProducts from './pages/admin/Products';
@@ -30,6 +31,7 @@ export default function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/orders" element={<Orders />} />
                 <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="/admin/categories" element={<AdminCategories />} />
                 <Route path="/admin/products" element={<AdminProducts />} />

@@ -50,6 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/checkout', [OrderController::class, 'checkout']);
+    Route::get('/my-orders', [OrderController::class, 'myOrders']);
 
     /*
     |--------------------------------------------------------------------------
