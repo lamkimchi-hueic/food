@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../api';
 import { getImageUrl, formatCurrency } from '../../utils/cart';
-import Toast from '../../components/Toast';
+import { toast } from '../../components/Toast';
 
 export default function AdminProducts() {
     const { user, logout } = useAuth();
@@ -13,7 +13,6 @@ export default function AdminProducts() {
     const [form, setForm] = useState({ category_id: '', name: '', desc: '', price: '' });
     const [imgFile, setImgFile] = useState(null);
     const [editId, setEditId] = useState(null);
-    const [toast, setToast] = useState(null);
 
     useEffect(() => {
         if (!user || user.role !== 1) { navigate('/'); return; }
@@ -36,15 +35,15 @@ export default function AdminProducts() {
             if (editId) {
                 fd.append('_method', 'PUT');
                 await api.post(`/admin/products/${editId}`, fd, { headers: { 'Content-Type': 'multipart/form-data' } });
-                setToast({ type: 'success', message: 'Cập nhật sản phẩm thành công' });
+                toast('Cập nhật sản phẩm thành công');
             } else {
                 await api.post('/admin/products', fd, { headers: { 'Content-Type': 'multipart/form-data' } });
-                setToast({ type: 'success', message: 'Tạo sản phẩm thành công' });
+                toast('Tạo sản phẩm thành công');
             }
             resetForm();
             load();
         } catch (err) {
-            setToast({ type: 'error', message: 'Thao tác thất bại' });
+            toast('Thao tác thất bại', 'error');
         }
     };
 
@@ -63,10 +62,10 @@ export default function AdminProducts() {
         if (!confirm('Xóa sản phẩm này?')) return;
         try {
             await api.delete(`/admin/products/${id}`);
-            setToast({ type: 'success', message: 'Xóa sản phẩm thành công' });
+            toast('Xóa sản phẩm thành công');
             load();
         } catch (err) {
-            setToast({ type: 'error', message: 'Xóa thất bại' });
+            toast('Xóa thất bại', 'error');
         }
     };
 
@@ -116,7 +115,6 @@ export default function AdminProducts() {
                     ))}
                 </div>
             </main>
-            {toast && <Toast type={toast.type} message={toast.message} onClose={() => setToast(null)} />}
         </div>
     );
 }

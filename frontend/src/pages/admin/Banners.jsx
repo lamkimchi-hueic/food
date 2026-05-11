@@ -2,14 +2,13 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../api';
-import Toast from '../../components/Toast';
+import { toast } from '../../components/Toast';
 
 export default function AdminBanners() {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [banners, setBanners] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [toast, setToast] = useState(null);
     const [updating, setUpdating] = useState(null);
     const [forms, setForms] = useState({});
 
@@ -41,7 +40,7 @@ export default function AdminBanners() {
             });
             setForms(initialForms);
         } catch (err) {
-            setToast({ type: 'error', message: 'Không tải được banner' });
+            toast('Không tải được banner', 'error');
         } finally {
             setLoading(false);
         }
@@ -61,10 +60,10 @@ export default function AdminBanners() {
             await api.post(`/admin/banners/${key}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
-            setToast({ type: 'success', message: `${key} đã được cập nhật thành công` });
+            toast(`${key} đã được cập nhật thành công`);
             load();
         } catch (err) {
-            setToast({ type: 'error', message: 'Cập nhật thất bại' });
+            toast('Cập nhật thất bại', 'error');
         } finally {
             setUpdating(null);
         }
@@ -170,7 +169,6 @@ export default function AdminBanners() {
                     })}
                 </div>
             </main>
-            {toast && <Toast type={toast.type} message={toast.message} onClose={() => setToast(null)} />}
         </div>
     );
 }

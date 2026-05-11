@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import ToastContainer, { toast } from '../components/Toast';
+import { toast } from '../components/Toast';
 import api from '../api';
 import { addToCart, getImageUrl, formatCurrency } from '../utils/cart';
 
@@ -56,7 +56,6 @@ export default function Menu() {
     return (
         <div className="flex flex-col min-h-screen font-sans">
             <Navbar />
-            <ToastContainer />
             <main className="flex-grow max-w-7xl mx-auto px-10 py-12 w-full">
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
                     <h1 className="text-4xl font-bold">Thực đơn đầy đủ</h1>

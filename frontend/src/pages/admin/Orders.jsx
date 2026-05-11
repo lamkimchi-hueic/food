@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../api';
-import Toast from '../../components/Toast';
+import { toast } from '../../components/Toast';
 
 export default function AdminOrders() {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
-    const [toast, setToast] = useState(null);
 
     useEffect(() => {
         if (!user || user.role !== 1) { navigate('/'); return; }
@@ -21,20 +20,20 @@ export default function AdminOrders() {
         if (!confirm('Delete this order?')) return;
         try {
             await api.delete(`/admin/orders/${id}`);
-            setToast({ type: 'success', message: 'Xóa đơn hàng thành công' });
+            toast('Xóa đơn hàng thành công');
             load();
         } catch (err) {
-            setToast({ type: 'error', message: 'Xóa thất bại' });
+            toast('Xóa thất bại', 'error');
         }
     };
 
     const handleStatusChange = async (id, status) => {
         try {
             await api.put(`/admin/orders/${id}`, { status });
-            setToast({ type: 'success', message: 'Cập nhật trạng thái thành công' });
+            toast('Cập nhật trạng thái thành công');
             load();
         } catch (err) {
-            setToast({ type: 'error', message: 'Cập nhật thất bại' });
+            toast('Cập nhật thất bại', 'error');
         }
     };
 
@@ -91,7 +90,6 @@ export default function AdminOrders() {
                     ))}
                 </div>
             </main>
-            {toast && <Toast type={toast.type} message={toast.message} onClose={() => setToast(null)} />}
         </div>
     );
 }

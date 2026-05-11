@@ -178,7 +178,7 @@
                 
                 const data = await res.json();
                 if(data.success) {
-                    alert('Order Placed Successfully! Order ID: ' + data.order_id);
+                    alert('Đặt hàng thành công!');
                     localStorage.removeItem('cart');
                     window.location.href = '/';
                 } else {

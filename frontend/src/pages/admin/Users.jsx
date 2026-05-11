@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../api';
-import Toast from '../../components/Toast';
+import { toast } from '../../components/Toast';
 
 export default function AdminUsers() {
     const { user, logout } = useAuth();
@@ -11,7 +11,6 @@ export default function AdminUsers() {
     const [form, setForm] = useState({ name: '', username: '', password: '', role: 0, phone: '', address: '' });
     const [editId, setEditId] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
-    const [toast, setToast] = useState(null);
 
     useEffect(() => {
         if (!user || user.role !== 1) { navigate('/'); return; }
@@ -28,15 +27,15 @@ export default function AdminUsers() {
 
             if (editId) {
                 await api.put(`/admin/users/${editId}`, payload);
-                setToast({ type: 'success', message: 'Cập nhật người dùng thành công' });
+                toast('Cập nhật người dùng thành công');
             } else {
                 await api.post('/admin/users', payload);
-                setToast({ type: 'success', message: 'Tạo người dùng thành công' });
+                toast('Tạo người dùng thành công');
             }
             resetForm();
             load();
         } catch (err) {
-            setToast({ type: 'error', message: 'Thao tác thất bại' });
+            toast(err.response?.data?.message || 'Thao tác thất bại', 'error');
         }
     };
 
@@ -54,10 +53,10 @@ export default function AdminUsers() {
         if (!confirm('Xóa người dùng này?')) return;
         try {
             await api.delete(`/admin/users/${id}`);
-            setToast({ type: 'success', message: 'Xóa người dùng thành công' });
+            toast('Xóa người dùng thành công');
             load();
         } catch (err) {
-            setToast({ type: 'error', message: 'Xóa thất bại' });
+            toast('Xóa thất bại', 'error');
         }
     };
 
@@ -120,7 +119,6 @@ export default function AdminUsers() {
                     ))}
                 </div>
             </main>
-            {toast && <Toast type={toast.type} message={toast.message} onClose={() => setToast(null)} />}
         </div>
     );
 }

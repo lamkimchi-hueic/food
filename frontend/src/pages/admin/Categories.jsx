@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../api';
 import { getImageUrl } from '../../utils/cart';
-import Toast from '../../components/Toast';
+import { toast } from '../../components/Toast';
 
 export default function AdminCategories() {
     const { user, logout } = useAuth();
@@ -12,7 +12,6 @@ export default function AdminCategories() {
     const [form, setForm] = useState({ name: '', desc: '' });
     const [imgFile, setImgFile] = useState(null);
     const [editSlug, setEditSlug] = useState(null);
-    const [toast, setToast] = useState(null);
 
     useEffect(() => {
         if (!user || user.role !== 1) { navigate('/'); return; }
@@ -35,10 +34,10 @@ export default function AdminCategories() {
             if (editSlug) {
                 formData.append('_method', 'PUT');
                 await api.post(`/admin/categories/${editSlug}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
-                setToast({ type: 'success', message: 'Cập nhật danh mục thành công' });
+                toast('Cập nhật danh mục thành công');
             } else {
                 await api.post('/admin/categories', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
-                setToast({ type: 'success', message: 'Tạo danh mục thành công' });
+                toast('Tạo danh mục thành công');
             }
             setForm({ name: '', desc: '' });
             setImgFile(null);
@@ -46,7 +45,7 @@ export default function AdminCategories() {
             load();
         } catch (err) {
             console.error('Category save error:', err.response?.data || err);
-            setToast({ type: 'error', message: err.response?.data?.message || 'Thao tác thất bại' });
+            toast(err.response?.data?.message || 'Thao tác thất bại', 'error');
         }
     };
 
@@ -60,10 +59,10 @@ export default function AdminCategories() {
         if (!confirm('Xóa danh mục này?')) return;
         try {
             await api.delete(`/admin/categories/${slug}`);
-            setToast({ type: 'success', message: 'Xóa danh mục thành công' });
+            toast('Xóa danh mục thành công');
             load();
         } catch (err) {
-            setToast({ type: 'error', message: 'Xóa thất bại' });
+            toast('Xóa thất bại', 'error');
         }
     };
 
@@ -113,7 +112,6 @@ export default function AdminCategories() {
                     ))}
                 </div>
             </main>
-            {toast && <Toast type={toast.type} message={toast.message} onClose={() => setToast(null)} />}
         </div>
     );
 }

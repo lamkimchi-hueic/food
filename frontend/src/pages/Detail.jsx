@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import ToastContainer, { toast } from '../components/Toast';
+import { toast } from '../components/Toast';
 import api from '../api';
 import { addToCart, getImageUrl, formatCurrency } from '../utils/cart';
 
@@ -26,7 +26,6 @@ export default function Detail() {
     return (
         <div className="flex flex-col min-h-screen font-sans">
             <Navbar />
-            <ToastContainer />
             <main className="flex-grow max-w-7xl mx-auto px-10 py-16 w-full">
                 <Link to="/menu" className="text-gray-400 hover:text-[#FF6600] mb-8 inline-flex items-center text-sm font-semibold transition">
                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>

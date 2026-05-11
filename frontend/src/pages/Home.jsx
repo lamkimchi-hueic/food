@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import ToastContainer, { toast } from '../components/Toast';
+import { toast } from '../components/Toast';
 import api from '../api';
 import { addToCart, getImageUrl, formatCurrency } from '../utils/cart';
 
@@ -29,7 +29,6 @@ export default function Home() {
     return (
         <div className="flex flex-col min-h-screen font-sans">
             <Navbar />
-            <ToastContainer />
             <main className="flex-grow">
                 {/* Hero */}
                 <section className="max-w-7xl mx-auto px-10 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
