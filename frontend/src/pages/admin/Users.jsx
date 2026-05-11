@@ -8,7 +8,7 @@ export default function AdminUsers() {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [users, setUsers] = useState([]);
-    const [form, setForm] = useState({ name: '', username: '', password: '', role: 0 });
+    const [form, setForm] = useState({ name: '', username: '', password: '', role: 0, phone: '', address: '' });
     const [editId, setEditId] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
     const [toast, setToast] = useState(null);
@@ -41,13 +41,13 @@ export default function AdminUsers() {
     };
 
     const resetForm = () => {
-        setForm({ name: '', username: '', password: '', role: 0 });
+        setForm({ name: '', username: '', password: '', role: 0, phone: '', address: '' });
         setEditId(null);
     };
 
     const handleEdit = (u) => {
         setEditId(u.id);
-        setForm({ name: u.name, username: u.username, password: '', role: u.role });
+        setForm({ name: u.name, username: u.username, password: '', role: u.role, phone: u.phone || '', address: u.address || '' });
     };
 
     const handleDelete = async (id) => {
@@ -91,6 +91,8 @@ export default function AdminUsers() {
                         <option value={0}>User</option>
                         <option value={1}>Admin</option>
                     </select>
+                    <input type="text" placeholder="Phone Number" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] transition" />
+                    <input type="text" placeholder="Address" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} className="bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] transition md:col-span-2" />
                     <div className="flex space-x-2 md:col-span-2">
                         <button type="submit" className="flex-grow bg-[#FF6600] text-black font-bold rounded-xl py-3 hover:bg-orange-600 transition">{editId ? 'Update' : 'Create'}</button>
                         {editId && <button type="button" onClick={resetForm} className="px-4 bg-gray-800 text-white rounded-xl hover:bg-gray-700 transition">Cancel</button>}
@@ -103,6 +105,12 @@ export default function AdminUsers() {
                             <div>
                                 <h3 className="font-bold text-lg">{u.name}</h3>
                                 <p className="text-gray-400 text-sm">@{u.username} &bull; {u.role === 1 ? 'Admin' : 'User'}</p>
+                                {(u.phone || u.address) && (
+                                    <p className="text-gray-500 text-xs mt-1">
+                                        {u.phone && <span>📞 {u.phone} </span>}
+                                        {u.address && <span>📍 {u.address}</span>}
+                                    </p>
+                                )}
                             </div>
                             <div className="flex space-x-3">
                                 <button onClick={() => handleEdit(u)} className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-[#FF6600] hover:text-black transition text-sm font-bold">Edit</button>
