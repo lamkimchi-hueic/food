@@ -4,10 +4,14 @@ import Footer from '../components/Footer';
 import api from '../api';
 
 export default function About() {
-    const [banner, setBanner] = useState(null);
+    const [banners, setBanners] = useState({});
 
     useEffect(() => {
-        api.get('/banners/about').then(r => setBanner(r.data.media_url)).catch(() => {});
+        api.get('/banners').then((r) => {
+            const bMap = {};
+            r.data.forEach(b => bMap[b.key] = b.media_url);
+            setBanners(bMap);
+        }).catch(() => {});
     }, []);
 
     return (
@@ -21,7 +25,7 @@ export default function About() {
                     </div>
                     <div className="relative">
                         <div className="w-full h-96 bg-[#1A1A1E] rounded-3xl overflow-hidden border border-gray-800 relative z-10 shadow-2xl">
-                            <img src={banner || "/storage/products/CIb9Zix74Rh4LXsQgRco6gDmYy1XDDsOt3td3aB6.jpg"} className="w-full h-full object-cover" />
+                            <img src={banners.about || "/storage/products/CIb9Zix74Rh4LXsQgRco6gDmYy1XDDsOt3td3aB6.jpg"} className="w-full h-full object-cover" />
                         </div>
                         <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#FF6600]/20 rounded-full blur-[80px] z-0"></div>
                     </div>
@@ -36,9 +40,9 @@ export default function About() {
                     <h2 className="text-3xl font-bold mb-10 text-center">Meet the Visionaries</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {[
-                            { name: 'John Maker', role: 'Head Chef', img: '/storage/products/OUyhAXmIG9dAdaJle0Vj5BbXwAcMV52b0cKjr4Wu.jpg' },
-                            { name: 'Anna Smith', role: 'Pastry Chef', img: '/storage/products/afnLJSxk1FsQGVzZAMWAE5AW0jdy1uvC3ajOrjwn.jpg' },
-                            { name: 'Tom Holland', role: 'Sous Chef', img: '/storage/products/X6UH4hnQ0uC4Yh998gofsBJe5bG6LQFor2ZPXod7.jpg' },
+                            { name: 'John Maker', role: 'Head Chef', img: banners.about_chef_1 || '/storage/products/OUyhAXmIG9dAdaJle0Vj5BbXwAcMV52b0cKjr4Wu.jpg' },
+                            { name: 'Anna Smith', role: 'Pastry Chef', img: banners.about_chef_2 || '/storage/products/afnLJSxk1FsQGVzZAMWAE5AW0jdy1uvC3ajOrjwn.jpg' },
+                            { name: 'Tom Holland', role: 'Sous Chef', img: banners.about_chef_3 || '/storage/products/X6UH4hnQ0uC4Yh998gofsBJe5bG6LQFor2ZPXod7.jpg' },
                         ].map((chef) => (
                             <div key={chef.name} className="bg-[#1A1A1E] rounded-3xl p-8 border border-gray-800 text-center">
                                 <div className="w-32 h-32 rounded-full overflow-hidden mx-auto mb-6 bg-gray-900 border-2 border-[#FF6600]">

@@ -14,9 +14,14 @@ export default function AdminBanners() {
 
     const predefined = [
         { key: 'hero', label: 'Hero Section (Home)', desc: 'The main banner on the homepage' },
-        { key: 'blog', label: 'Blog Banner', desc: 'Main image for the blog page' },
-        { key: 'about', label: 'About Us Banner', desc: 'Main image for the about us page' },
         { key: 'newsletter', label: 'Newsletter Background', desc: 'Background image for newsletter section' },
+        { key: 'blog', label: 'Blog Featured (Post 1)', desc: 'Main image for the featured blog post' },
+        { key: 'blog_2', label: 'Blog Post 2', desc: 'Image for the second blog post' },
+        { key: 'blog_3', label: 'Blog Post 3', desc: 'Image for the third blog post' },
+        { key: 'about', label: 'About Us Main', desc: 'Main image for the about us page' },
+        { key: 'about_chef_1', label: 'Chef 1', desc: 'Image for the first chef' },
+        { key: 'about_chef_2', label: 'Chef 2', desc: 'Image for the second chef' },
+        { key: 'about_chef_3', label: 'Chef 3', desc: 'Image for the third chef' },
     ];
 
     useEffect(() => {
