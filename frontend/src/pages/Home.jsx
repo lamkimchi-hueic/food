@@ -16,7 +16,7 @@ export default function Home() {
         api.get('/products?random=1&limit=4').then((r) => setSpecials(r.data));
         api.get('/banners').then((r) => {
             const bMap = {};
-            r.data.forEach(b => bMap[b.key] = b.media_url);
+            r.data.forEach(b => bMap[b.key] = b);
             setBanners(bMap);
         });
     }, []);
@@ -34,8 +34,16 @@ export default function Home() {
                 {/* Hero */}
                 <section className="max-w-7xl mx-auto px-10 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div>
-                        <h1 className="text-6xl lg:text-7xl font-bold leading-tight mb-6">The Art of <br /><span className="text-[#FF6600] font-serif italic text-7xl">Saffron Risotto.</span></h1>
-                        <p className="text-gray-400 text-sm mb-10 max-w-sm leading-relaxed">Experience the rich, aromatic flavors of our signature Saffron Risotto, crafted with the finest ingredients for a truly unforgettable dining experience.</p>
+                        <h1 className="text-6xl lg:text-7xl font-bold leading-tight mb-6">
+                            {banners.hero?.title ? (
+                                <span dangerouslySetInnerHTML={{ __html: banners.hero.title }}></span>
+                            ) : (
+                                <>The Art of <br /><span className="text-[#FF6600] font-serif italic text-7xl">Saffron Risotto.</span></>
+                            )}
+                        </h1>
+                        <p className="text-gray-400 text-sm mb-10 max-w-sm leading-relaxed">
+                            {banners.hero?.content || 'Experience the rich, aromatic flavors of our signature Saffron Risotto, crafted with the finest ingredients for a truly unforgettable dining experience.'}
+                        </p>
                         <div className="flex items-center space-x-6">
                             <Link to="/menu" className="px-8 py-4 bg-[#FF6600] text-black font-bold rounded-full hover:bg-orange-600 transition inline-block">Order Now</Link>
                             <Link to="/menu" className="text-sm font-semibold hover:text-[#FF6600] transition flex items-center">
@@ -46,7 +54,7 @@ export default function Home() {
                     </div>
                     <div className="flex justify-end relative mt-10 lg:mt-0">
                         <div className="w-80 h-80 md:w-[28rem] md:h-[28rem] bg-gray-800 rounded-full overflow-hidden border-4 border-[#1A1A1E] shadow-[0_0_50px_rgba(255,102,0,0.15)] relative">
-                            <img src={banners.hero || getImageUrl(null)} alt="Signature" className="w-full h-full object-cover" />
+                            <img src={banners.hero?.media_url || getImageUrl(null)} alt="Signature" className="w-full h-full object-cover" />
                         </div>
                         <div className="absolute top-10 right-0 bg-[#FF6600]/10 backdrop-blur-md px-6 py-3 rounded-2xl border border-[#FF6600]/20 flex items-center space-x-3">
                             <div className="w-2 h-2 bg-[#FF6600] rounded-full"></div>
@@ -130,7 +138,7 @@ export default function Home() {
                 <section className="relative py-32 overflow-hidden group">
                     <div className="absolute inset-0 z-0">
                         <img 
-                            src={banners.newsletter || "/newsletter-bg.png"} 
+                            src={banners.newsletter?.media_url || "/newsletter-bg.png"} 
                             alt="Kitchen Background" 
                             className="w-full h-full object-cover grayscale opacity-40 group-hover:scale-105 transition-transform duration-1000"
                         />

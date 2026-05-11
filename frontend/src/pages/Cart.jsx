@@ -25,11 +25,11 @@ export default function Cart() {
 
     // Pre-fill receiver name and phone from logged-in user once loading is finished
     useEffect(() => {
-        if (!loading && user) {
-            if (user.phone && !receiver) setReceiver(user.phone);
-            if (user.address && !address) setAddress(user.address);
+        if (user) {
+            if (!receiver && user.phone) setReceiver(user.phone);
+            if (!address && user.address) setAddress(user.address);
         }
-    }, [user, loading, receiver, address]);
+    }, [user, receiver, address]);
 
     const total = cart.reduce((s, i) => s + i.price * i.amount, 0);
     const count = cart.reduce((s, i) => s + i.amount, 0);

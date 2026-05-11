@@ -11,6 +11,7 @@ export default function AdminBanners() {
     const [loading, setLoading] = useState(true);
     const [toast, setToast] = useState(null);
     const [updating, setUpdating] = useState(null);
+    const [forms, setForms] = useState({});
 
     const predefined = [
         { key: 'hero', label: 'Hero Section (Home)', desc: 'The main banner on the homepage' },
@@ -19,9 +20,9 @@ export default function AdminBanners() {
         { key: 'blog_2', label: 'Blog Post 2', desc: 'Image for the second blog post' },
         { key: 'blog_3', label: 'Blog Post 3', desc: 'Image for the third blog post' },
         { key: 'about', label: 'About Us Main', desc: 'Main image for the about us page' },
-        { key: 'about_chef_1', label: 'Chef 1', desc: 'Image for the first chef' },
-        { key: 'about_chef_2', label: 'Chef 2', desc: 'Image for the second chef' },
-        { key: 'about_chef_3', label: 'Chef 3', desc: 'Image for the third chef' },
+        { key: 'about_chef_1', label: 'Chef 1', desc: 'Image and info for the first chef' },
+        { key: 'about_chef_2', label: 'Chef 2', desc: 'Image and info for the second chef' },
+        { key: 'about_chef_3', label: 'Chef 3', desc: 'Image and info for the third chef' },
     ];
 
     useEffect(() => {
@@ -34,6 +35,11 @@ export default function AdminBanners() {
         try {
             const r = await api.get('/banners');
             setBanners(r.data);
+            const initialForms = {};
+            r.data.forEach(b => {
+                initialForms[b.key] = { title: b.title || '', content: b.content || '', link: b.link || '' };
+            });
+            setForms(initialForms);
         } catch (err) {
             setToast({ type: 'error', message: 'Failed to load banners' });
         } finally {
@@ -41,12 +47,17 @@ export default function AdminBanners() {
         }
     };
 
-    const handleUpdate = async (key, file) => {
-        if (!file) return;
+    const handleUpdate = async (key, file = null) => {
         setUpdating(key);
         try {
             const formData = new FormData();
-            formData.append('img', file);
+            if (file) formData.append('img', file);
+            
+            const form = forms[key] || {};
+            formData.append('title', form.title || '');
+            formData.append('content', form.content || '');
+            formData.append('link', form.link || '');
+
             await api.post(`/admin/banners/${key}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
@@ -57,6 +68,16 @@ export default function AdminBanners() {
         } finally {
             setUpdating(null);
         }
+    };
+
+    const handleInputChange = (key, field, value) => {
+        setForms(prev => ({
+            ...prev,
+            [key]: {
+                ...(prev[key] || { title: '', content: '', link: '' }),
+                [field]: value
+            }
+        }));
     };
 
     const getBanner = (key) => banners.find(b => b.key === key);
@@ -73,11 +94,12 @@ export default function AdminBanners() {
 
             <main className="flex-grow max-w-7xl mx-auto px-10 py-12 w-full">
                 <h1 className="text-3xl font-bold mb-2">Manage <span className="text-[#FF6600]">Banners</span></h1>
-                <p className="text-gray-400 mb-10">Update images for various sections of your website.</p>
+                <p className="text-gray-400 mb-10">Update images and text for various sections of your website.</p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {predefined.map((p) => {
                         const banner = getBanner(p.key);
+                        const form = forms[p.key] || { title: '', content: '', link: '' };
                         return (
                             <div key={p.key} className="bg-[#1A1A1E] rounded-3xl border border-gray-800 overflow-hidden flex flex-col shadow-lg">
                                 <div className="h-48 bg-gray-900 relative group">
@@ -94,26 +116,54 @@ export default function AdminBanners() {
                                         </div>
                                     )}
                                 </div>
-                                <div className="p-6">
-                                    <h3 className="font-bold text-xl mb-1">{p.label}</h3>
-                                    <p className="text-gray-400 text-sm mb-6">{p.desc}</p>
-                                    
-                                    <label className="block">
-                                        <span className="sr-only">Choose image</span>
+                                <div className="p-6 space-y-4">
+                                    <div>
+                                        <h3 className="font-bold text-xl mb-1">{p.label}</h3>
+                                        <p className="text-gray-400 text-xs mb-4">{p.desc}</p>
+                                    </div>
+
+                                    <div className="space-y-3">
                                         <input 
-                                            type="file" 
-                                            accept="image/*"
-                                            onChange={(e) => handleUpdate(p.key, e.target.files[0])}
-                                            disabled={updating === p.key}
-                                            className="block w-full text-sm text-gray-500
-                                                file:mr-4 file:py-2 file:px-4
-                                                file:rounded-full file:border-0
-                                                file:text-sm file:font-semibold
-                                                file:bg-[#FF6600]/10 file:text-[#FF6600]
-                                                hover:file:bg-[#FF6600]/20
-                                                cursor-pointer disabled:opacity-50"
+                                            type="text" 
+                                            placeholder="Title" 
+                                            value={form.title} 
+                                            onChange={(e) => handleInputChange(p.key, 'title', e.target.value)}
+                                            className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-[#FF6600] transition"
                                         />
-                                    </label>
+                                        <textarea 
+                                            placeholder="Content" 
+                                            value={form.content} 
+                                            onChange={(e) => handleInputChange(p.key, 'content', e.target.value)}
+                                            rows="2"
+                                            className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-[#FF6600] transition"
+                                        ></textarea>
+                                    </div>
+                                    
+                                    <div className="flex items-center space-x-2">
+                                        <label className="flex-grow">
+                                            <span className="sr-only">Choose image</span>
+                                            <input 
+                                                type="file" 
+                                                accept="image/*"
+                                                onChange={(e) => handleUpdate(p.key, e.target.files[0])}
+                                                disabled={updating === p.key}
+                                                className="block w-full text-xs text-gray-500
+                                                    file:mr-4 file:py-2 file:px-4
+                                                    file:rounded-full file:border-0
+                                                    file:text-xs file:font-semibold
+                                                    file:bg-[#FF6600]/10 file:text-[#FF6600]
+                                                    hover:file:bg-[#FF6600]/20
+                                                    cursor-pointer disabled:opacity-50"
+                                            />
+                                        </label>
+                                        <button 
+                                            onClick={() => handleUpdate(p.key)}
+                                            disabled={updating === p.key}
+                                            className="bg-[#FF6600] text-black font-bold px-4 py-2 rounded-xl text-xs hover:bg-orange-600 transition disabled:opacity-50"
+                                        >
+                                            Save Text
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         );
