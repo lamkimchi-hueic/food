@@ -74,16 +74,16 @@ export default function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {trending.map((item) => (
                             <div key={item.id} className="bg-[#1A1A1E] rounded-[2rem] p-6 flex items-center space-x-6 hover:shadow-xl hover:shadow-[#FF6600]/10 transition duration-300 group cursor-pointer border border-transparent hover:border-[#FF6600]/20">
-                                <div className="w-32 h-32 rounded-2xl overflow-hidden flex-shrink-0">
+                                <Link to={`/product/${item.id}`} className="w-32 h-32 rounded-2xl overflow-hidden flex-shrink-0">
                                     <img 
                                         src={getImageUrl(item)} 
                                         className="w-full h-full object-cover group-hover:scale-110 transition duration-500" 
                                         onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000&auto=format&fit=crop'; }}
                                     />
-                                </div>
+                                </Link>
                                 <div className="flex-grow w-full">
                                     <div className="text-xs text-[#FF6600] font-bold mb-2 uppercase tracking-wide">{item.category?.name || 'Nổi bật'}</div>
-                                    <h3 className="text-xl font-bold mb-2 group-hover:text-[#FF6600] transition line-clamp-1">{item.name}</h3>
+                                    <Link to={`/product/${item.id}`}><h3 className="text-xl font-bold mb-2 group-hover:text-[#FF6600] transition line-clamp-1">{item.name}</h3></Link>
                                     <p className="text-gray-400 text-sm mb-4 line-clamp-1">{item.desc}</p>
                                     <div className="flex justify-between items-center mt-auto">
                                         <span className="font-bold text-lg">{formatCurrency(item.price)}</span>
@@ -104,15 +104,15 @@ export default function Home() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
                             {specials.map((s) => (
                                 <div key={s.id} className="bg-[#1A1A1E] border border-gray-800/50 rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300 flex flex-col group h-full cursor-pointer hover:border-[#FF6600]/30 shadow-lg relative">
-                                    <div className="h-40 overflow-hidden">
+                                    <Link to={`/product/${s.id}`} className="h-40 overflow-hidden block">
                                         <img 
                                             src={getImageUrl(s)} 
                                             className="w-full h-full object-cover group-hover:scale-110 transition duration-500" 
                                             onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000&auto=format&fit=crop'; }}
                                         />
-                                    </div>
+                                    </Link>
                                     <div className="p-6 flex flex-col flex-grow">
-                                        <h3 className="font-bold mb-2 line-clamp-1">{s.name}</h3>
+                                        <Link to={`/product/${s.id}`}><h3 className="font-bold mb-2 line-clamp-1">{s.name}</h3></Link>
                                         <p className="text-gray-400 text-xs mb-6 line-clamp-2">{s.desc}</p>
                                         <div className="mt-auto flex justify-between items-center">
                                             <span className="text-[#FF6600] font-bold text-lg">{formatCurrency(s.price)}</span>

@@ -75,11 +75,11 @@ export default function Cart() {
                         <div className="space-y-6">
                             {cart.map((item, index) => (
                                 <div key={index} className="flex items-center space-x-6 bg-[#141416] p-4 rounded-2xl border border-gray-800">
-                                    <div className="w-24 h-24 rounded-xl overflow-hidden bg-gray-900 border border-gray-800">
+                                    <Link to={`/product/${item.id}`} className="w-24 h-24 rounded-xl overflow-hidden bg-gray-900 border border-gray-800">
                                         <img src={item.img || getImageUrl(null)} className="w-full h-full object-cover" />
-                                    </div>
+                                    </Link>
                                     <div className="flex-grow">
-                                        <h3 className="text-xl font-bold line-clamp-1">{item.name}</h3>
+                                        <Link to={`/product/${item.id}`}><h3 className="text-xl font-bold line-clamp-1">{item.name}</h3></Link>
                                         <p className="text-[#FF6600] font-bold text-lg mt-1">{formatCurrency(item.price)}</p>
                                     </div>
                                     <div className="flex items-center space-x-4 bg-[#0F0F11] px-4 py-2 rounded-full border border-gray-800">
