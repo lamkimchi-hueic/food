@@ -48,12 +48,12 @@ export default function Cart() {
                 items: cart.map((i) => ({ id: i.id, amount: i.amount })),
             });
             if (res.data.success) {
-                toast('Order Placed Successfully!');
+                toast('Order Placed Successfully!', 'success');
                 clearCart();
                 setTimeout(() => navigate('/'), 1500);
             }
         } catch (err) {
-            toast(err.response?.data?.message || 'Error placing order');
+            toast(err.response?.data?.message || 'Error placing order', 'error');
         }
         setSubmitting(false);
     };
