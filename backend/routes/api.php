@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\AnalyticsController;
+use App\Http\Controllers\Api\BannerController;
 use Illuminate\Support\Facades\Http;
 
 /*
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\Http;
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/banners', [BannerController::class, 'index']);
+Route::get('/banners/{key}', [BannerController::class, 'show']);
 
 // Diagnostic endpoint - shows current Python API URL config and connection test
 Route::get('/_debug/python', function () {
@@ -62,6 +65,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('products/{product}', [ProductController::class, 'destroy']);
         Route::apiResource('users', UserController::class);
         Route::apiResource('orders', OrderController::class);
+        Route::post('banners/{key}', [BannerController::class, 'update']);
 
         Route::prefix('analytics')->group(function () {
             Route::get('/customer-interest', [AnalyticsController::class, 'customerInterest']);

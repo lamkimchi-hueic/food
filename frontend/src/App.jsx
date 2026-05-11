@@ -14,6 +14,7 @@ import AdminProducts from './pages/admin/Products';
 import AdminUsers from './pages/admin/Users';
 import AdminOrders from './pages/admin/Orders';
 import AdminAnalytics from './pages/admin/Analytics';
+import AdminBanners from './pages/admin/Banners';
 import ToastContainer from './components/Toast';
 
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
                 <Route path="/admin/users" element={<AdminUsers />} />
                 <Route path="/admin/orders" element={<AdminOrders />} />
                 <Route path="/admin/analytics" element={<AdminAnalytics />} />
+                <Route path="/admin/banners" element={<AdminBanners />} />
             </Routes>
             <ToastContainer />
         </>

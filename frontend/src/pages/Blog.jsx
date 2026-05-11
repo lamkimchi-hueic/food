@@ -1,7 +1,15 @@
+import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import api from '../api';
 
 export default function Blog() {
+    const [banner, setBanner] = useState(null);
+
+    useEffect(() => {
+        api.get('/banners/blog').then(r => setBanner(r.data.media_url)).catch(() => {});
+    }, []);
+
     return (
         <div className="flex flex-col min-h-screen font-sans">
             <Navbar />
@@ -10,7 +18,7 @@ export default function Blog() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <a href="#" className="bg-[#1A1A1E] rounded-3xl overflow-hidden group shadow-lg border border-gray-800 hover:border-[#FF6600]/30 transition block md:col-span-2 lg:col-span-1">
                         <div className="h-64 overflow-hidden relative">
-                            <img src="/storage/products/gQ0Rnd9Jg3vcvJulDy7XbsFuPHXA0CInrOPErO9R.jpg" className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                            <img src={banner || "/storage/products/gQ0Rnd9Jg3vcvJulDy7XbsFuPHXA0CInrOPErO9R.jpg"} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
                             <div className="absolute top-4 left-4 bg-[#FF6600] text-black font-bold px-3 py-1 rounded-full text-xs">Featured</div>
                         </div>
                         <div className="p-8">

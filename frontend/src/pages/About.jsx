@@ -1,7 +1,15 @@
+import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import api from '../api';
 
 export default function About() {
+    const [banner, setBanner] = useState(null);
+
+    useEffect(() => {
+        api.get('/banners/about').then(r => setBanner(r.data.media_url)).catch(() => {});
+    }, []);
+
     return (
         <div className="flex flex-col min-h-screen font-sans">
             <Navbar />
@@ -13,7 +21,7 @@ export default function About() {
                     </div>
                     <div className="relative">
                         <div className="w-full h-96 bg-[#1A1A1E] rounded-3xl overflow-hidden border border-gray-800 relative z-10 shadow-2xl">
-                            <img src="/storage/products/CIb9Zix74Rh4LXsQgRco6gDmYy1XDDsOt3td3aB6.jpg" className="w-full h-full object-cover" />
+                            <img src={banner || "/storage/products/CIb9Zix74Rh4LXsQgRco6gDmYy1XDDsOt3td3aB6.jpg"} className="w-full h-full object-cover" />
                         </div>
                         <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#FF6600]/20 rounded-full blur-[80px] z-0"></div>
                     </div>

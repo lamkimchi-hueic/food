@@ -9,10 +9,16 @@ import { addToCart, getImageUrl } from '../utils/cart';
 export default function Home() {
     const [trending, setTrending] = useState([]);
     const [specials, setSpecials] = useState([]);
+    const [banners, setBanners] = useState({});
 
     useEffect(() => {
         api.get('/products?random=1&limit=2').then((r) => setTrending(r.data));
         api.get('/products?random=1&limit=4').then((r) => setSpecials(r.data));
+        api.get('/banners').then((r) => {
+            const bMap = {};
+            r.data.forEach(b => bMap[b.key] = b.media_url);
+            setBanners(bMap);
+        });
     }, []);
 
     const handleAdd = (item) => {
@@ -40,7 +46,7 @@ export default function Home() {
                     </div>
                     <div className="flex justify-end relative mt-10 lg:mt-0">
                         <div className="w-80 h-80 md:w-[28rem] md:h-[28rem] bg-gray-800 rounded-full overflow-hidden border-4 border-[#1A1A1E] shadow-[0_0_50px_rgba(255,102,0,0.15)] relative">
-                            <img src={getImageUrl(null)} alt="Signature" className="w-full h-full object-cover" />
+                            <img src={banners.hero || getImageUrl(null)} alt="Signature" className="w-full h-full object-cover" />
                         </div>
                         <div className="absolute top-10 right-0 bg-[#FF6600]/10 backdrop-blur-md px-6 py-3 rounded-2xl border border-[#FF6600]/20 flex items-center space-x-3">
                             <div className="w-2 h-2 bg-[#FF6600] rounded-full"></div>
@@ -124,7 +130,7 @@ export default function Home() {
                 <section className="relative py-32 overflow-hidden group">
                     <div className="absolute inset-0 z-0">
                         <img 
-                            src="/newsletter-bg.png" 
+                            src={banners.newsletter || "/newsletter-bg.png"} 
                             alt="Kitchen Background" 
                             className="w-full h-full object-cover grayscale opacity-40 group-hover:scale-105 transition-transform duration-1000"
                         />
