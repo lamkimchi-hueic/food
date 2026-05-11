@@ -36,15 +36,15 @@ export default function AdminProducts() {
             if (editId) {
                 fd.append('_method', 'PUT');
                 await api.post(`/admin/products/${editId}`, fd, { headers: { 'Content-Type': 'multipart/form-data' } });
-                setToast({ type: 'success', message: 'Product updated successfully' });
+                setToast({ type: 'success', message: 'Cập nhật sản phẩm thành công' });
             } else {
                 await api.post('/admin/products', fd, { headers: { 'Content-Type': 'multipart/form-data' } });
-                setToast({ type: 'success', message: 'Product created successfully' });
+                setToast({ type: 'success', message: 'Tạo sản phẩm thành công' });
             }
             resetForm();
             load();
         } catch (err) {
-            setToast({ type: 'error', message: 'Operation failed' });
+            setToast({ type: 'error', message: 'Thao tác thất bại' });
         }
     };
 
@@ -60,13 +60,13 @@ export default function AdminProducts() {
     };
 
     const handleDelete = async (id) => {
-        if (!confirm('Delete this product?')) return;
+        if (!confirm('Xóa sản phẩm này?')) return;
         try {
             await api.delete(`/admin/products/${id}`);
-            setToast({ type: 'success', message: 'Product deleted successfully' });
+            setToast({ type: 'success', message: 'Xóa sản phẩm thành công' });
             load();
         } catch (err) {
-            setToast({ type: 'error', message: 'Delete failed' });
+            setToast({ type: 'error', message: 'Xóa thất bại' });
         }
     };
 
@@ -75,26 +75,26 @@ export default function AdminProducts() {
             <nav className="flex items-center justify-between px-10 py-6 max-w-7xl mx-auto w-full border-b border-gray-800">
                 <Link to="/admin" className="text-[#FF6600] font-bold text-xl tracking-wider">MIX CURRY <span className="text-white text-xs ml-2 border border-gray-700 px-2 py-0.5 rounded">ADMIN</span></Link>
                 <div className="flex items-center space-x-6">
-                    <Link to="/admin" className="text-sm font-bold text-gray-400 hover:text-white transition">Dashboard</Link>
-                    <button onClick={logout} className="text-sm font-bold text-gray-400 hover:text-red-500 transition">Logout</button>
+                    <Link to="/admin" className="text-sm font-bold text-gray-400 hover:text-white transition">Bảng điều khiển</Link>
+                    <button onClick={logout} className="text-sm font-bold text-gray-400 hover:text-red-500 transition">Đăng xuất</button>
                 </div>
             </nav>
 
             <main className="flex-grow max-w-7xl mx-auto px-10 py-12 w-full">
-                <h1 className="text-3xl font-bold mb-8">Manage <span className="text-[#FF6600]">Products</span></h1>
+                <h1 className="text-3xl font-bold mb-8">Quản lý <span className="text-[#FF6600]">Sản phẩm</span></h1>
 
                 <form onSubmit={handleSubmit} className="bg-[#1A1A1E] p-6 rounded-2xl border border-gray-800 mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
                     <select value={form.category_id} onChange={(e) => setForm({ ...form, category_id: e.target.value })} required className="bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] transition">
-                        <option value="">Select Category</option>
+                        <option value="">Chọn danh mục</option>
                         {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
                     </select>
-                    <input type="text" placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required className="bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] transition" />
-                    <input type="text" placeholder="Description" value={form.desc} onChange={(e) => setForm({ ...form, desc: e.target.value })} className="bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] transition" />
-                    <input type="number" step="0.01" placeholder="Price" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} required className="bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] transition" />
+                    <input type="text" placeholder="Tên" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required className="bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] transition" />
+                    <input type="text" placeholder="Mô tả" value={form.desc} onChange={(e) => setForm({ ...form, desc: e.target.value })} className="bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] transition" />
+                    <input type="number" step="0.01" placeholder="Giá" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} required className="bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] transition" />
                     <input type="file" accept="image/*" onChange={(e) => setImgFile(e.target.files[0])} className="bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 transition file:mr-4 file:rounded-lg file:border-0 file:bg-[#FF6600] file:text-black file:font-bold file:px-4 file:py-1" />
                     <div className="flex space-x-2">
-                        <button type="submit" className="flex-grow bg-[#FF6600] text-black font-bold rounded-xl py-3 hover:bg-orange-600 transition">{editId ? 'Update' : 'Create'}</button>
-                        {editId && <button type="button" onClick={resetForm} className="px-4 bg-gray-800 text-white rounded-xl hover:bg-gray-700 transition">Cancel</button>}
+                        <button type="submit" className="flex-grow bg-[#FF6600] text-black font-bold rounded-xl py-3 hover:bg-orange-600 transition">{editId ? 'Cập nhật' : 'Tạo mới'}</button>
+                        {editId && <button type="button" onClick={resetForm} className="px-4 bg-gray-800 text-white rounded-xl hover:bg-gray-700 transition">Hủy</button>}
                     </div>
                 </form>
 
@@ -109,8 +109,8 @@ export default function AdminProducts() {
                                 <p className="text-gray-400 text-sm">{p.category?.name} &bull; ${parseFloat(p.price).toFixed(2)}</p>
                             </div>
                             <div className="flex space-x-3">
-                                <button onClick={() => handleEdit(p)} className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-[#FF6600] hover:text-black transition text-sm font-bold">Edit</button>
-                                <button onClick={() => handleDelete(p.id)} className="px-4 py-2 bg-gray-800 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition text-sm font-bold">Delete</button>
+                                <button onClick={() => handleEdit(p)} className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-[#FF6600] hover:text-black transition text-sm font-bold">Sửa</button>
+                                <button onClick={() => handleDelete(p.id)} className="px-4 py-2 bg-gray-800 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition text-sm font-bold">Xóa</button>
                             </div>
                         </div>
                     ))}

@@ -15,8 +15,8 @@ export default function Category() {
         <div className="flex flex-col min-h-screen font-sans">
             <Navbar />
             <main className="flex-grow max-w-7xl mx-auto px-10 py-16 w-full">
-                <h1 className="text-5xl font-bold mb-4 text-center">Browse by <span className="text-[#FF6600]">Categories</span></h1>
-                <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">Explore our wide variety of dishes divided into perfect groupings to satisfy any craving you might have today.</p>
+                <h1 className="text-5xl font-bold mb-4 text-center">Tìm kiếm theo <span className="text-[#FF6600]">Danh mục</span></h1>
+                <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">Khám phá nhiều loại món ăn đa dạng của chúng tôi được chia thành các nhóm hoàn hảo để thỏa mãn bất kỳ cơn thèm nào bạn có thể có hôm nay.</p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {categories.map((cat) => (
@@ -26,7 +26,7 @@ export default function Category() {
                                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
                             </div>
                             <h2 className="text-2xl font-bold mb-2 group-hover:text-[#FF6600] transition z-10">{cat.name}</h2>
-                            <p className="text-gray-400 text-sm z-10 line-clamp-2">{cat.desc || 'Explore delicious options in this category.'}</p>
+                            <p className="text-gray-400 text-sm z-10 line-clamp-2">{cat.desc || 'Khám phá những lựa chọn thơm ngon trong danh mục này.'}</p>
                         </Link>
                     ))}
                 </div>

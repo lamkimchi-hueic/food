@@ -14,15 +14,15 @@ export default function AdminBanners() {
     const [forms, setForms] = useState({});
 
     const predefined = [
-        { key: 'hero', label: 'Hero Section (Home)', desc: 'The main banner on the homepage' },
-        { key: 'newsletter', label: 'Newsletter Background', desc: 'Background image for newsletter section' },
-        { key: 'blog', label: 'Blog Featured (Post 1)', desc: 'Main image for the featured blog post' },
-        { key: 'blog_2', label: 'Blog Post 2', desc: 'Image for the second blog post' },
-        { key: 'blog_3', label: 'Blog Post 3', desc: 'Image for the third blog post' },
-        { key: 'about', label: 'About Us Main', desc: 'Main image for the about us page' },
-        { key: 'about_chef_1', label: 'Chef 1', desc: 'Image and info for the first chef' },
-        { key: 'about_chef_2', label: 'Chef 2', desc: 'Image and info for the second chef' },
-        { key: 'about_chef_3', label: 'Chef 3', desc: 'Image and info for the third chef' },
+        { key: 'hero', label: 'Phần Hero (Trang chủ)', desc: 'Banner chính trên trang chủ' },
+        { key: 'newsletter', label: 'Nền Bản tin', desc: 'Hình nền cho phần bản tin' },
+        { key: 'blog', label: 'Bài viết Blog Nổi bật (Bài 1)', desc: 'Hình ảnh chính cho bài viết blog nổi bật' },
+        { key: 'blog_2', label: 'Bài viết Blog 2', desc: 'Hình ảnh cho bài viết blog thứ hai' },
+        { key: 'blog_3', label: 'Bài viết Blog 3', desc: 'Hình ảnh cho bài viết blog thứ ba' },
+        { key: 'about', label: 'Trang Giới thiệu chính', desc: 'Hình ảnh chính cho trang giới thiệu' },
+        { key: 'about_chef_1', label: 'Đầu bếp 1', desc: 'Hình ảnh và thông tin cho đầu bếp thứ nhất' },
+        { key: 'about_chef_2', label: 'Đầu bếp 2', desc: 'Hình ảnh và thông tin cho đầu bếp thứ hai' },
+        { key: 'about_chef_3', label: 'Đầu bếp 3', desc: 'Hình ảnh và thông tin cho đầu bếp thứ ba' },
     ];
 
     useEffect(() => {
@@ -41,7 +41,7 @@ export default function AdminBanners() {
             });
             setForms(initialForms);
         } catch (err) {
-            setToast({ type: 'error', message: 'Failed to load banners' });
+            setToast({ type: 'error', message: 'Không tải được banner' });
         } finally {
             setLoading(false);
         }
@@ -61,10 +61,10 @@ export default function AdminBanners() {
             await api.post(`/admin/banners/${key}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
-            setToast({ type: 'success', message: `${key} updated successfully` });
+            setToast({ type: 'success', message: `${key} đã được cập nhật thành công` });
             load();
         } catch (err) {
-            setToast({ type: 'error', message: 'Update failed' });
+            setToast({ type: 'error', message: 'Cập nhật thất bại' });
         } finally {
             setUpdating(null);
         }
@@ -87,14 +87,14 @@ export default function AdminBanners() {
             <nav className="flex items-center justify-between px-10 py-6 max-w-7xl mx-auto w-full border-b border-gray-800">
                 <Link to="/admin" className="text-[#FF6600] font-bold text-xl tracking-wider">MIX CURRY <span className="text-white text-xs ml-2 border border-gray-700 px-2 py-0.5 rounded">ADMIN</span></Link>
                 <div className="flex items-center space-x-6">
-                    <Link to="/admin" className="text-sm font-bold text-gray-400 hover:text-white transition">Dashboard</Link>
-                    <button onClick={logout} className="text-sm font-bold text-gray-400 hover:text-red-500 transition">Logout</button>
+                    <Link to="/admin" className="text-sm font-bold text-gray-400 hover:text-white transition">Bảng điều khiển</Link>
+                    <button onClick={logout} className="text-sm font-bold text-gray-400 hover:text-red-500 transition">Đăng xuất</button>
                 </div>
             </nav>
 
             <main className="flex-grow max-w-7xl mx-auto px-10 py-12 w-full">
-                <h1 className="text-3xl font-bold mb-2">Manage <span className="text-[#FF6600]">Banners</span></h1>
-                <p className="text-gray-400 mb-10">Update images and text for various sections of your website.</p>
+                <h1 className="text-3xl font-bold mb-2">Quản lý <span className="text-[#FF6600]">Banner</span></h1>
+                <p className="text-gray-400 mb-10">Cập nhật hình ảnh và văn bản cho các phần khác nhau trên trang web của bạn.</p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {predefined.map((p) => {
@@ -125,13 +125,13 @@ export default function AdminBanners() {
                                     <div className="space-y-3">
                                         <input 
                                             type="text" 
-                                            placeholder="Title" 
+                                            placeholder="Tiêu đề" 
                                             value={form.title} 
                                             onChange={(e) => handleInputChange(p.key, 'title', e.target.value)}
                                             className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-[#FF6600] transition"
                                         />
                                         <textarea 
-                                            placeholder="Content" 
+                                            placeholder="Nội dung" 
                                             value={form.content} 
                                             onChange={(e) => handleInputChange(p.key, 'content', e.target.value)}
                                             rows="2"
@@ -141,7 +141,7 @@ export default function AdminBanners() {
                                     
                                     <div className="flex items-center space-x-2">
                                         <label className="flex-grow">
-                                            <span className="sr-only">Choose image</span>
+                                            <span className="sr-only">Chọn hình ảnh</span>
                                             <input 
                                                 type="file" 
                                                 accept="image/*"
@@ -161,7 +161,7 @@ export default function AdminBanners() {
                                             disabled={updating === p.key}
                                             className="bg-[#FF6600] text-black font-bold px-4 py-2 rounded-xl text-xs hover:bg-orange-600 transition disabled:opacity-50"
                                         >
-                                            Save Text
+                                            Lưu văn bản
                                         </button>
                                     </div>
                                 </div>

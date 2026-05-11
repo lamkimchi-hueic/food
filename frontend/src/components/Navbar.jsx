@@ -25,12 +25,12 @@ export default function Navbar() {
         <nav className="flex items-center justify-between px-10 py-6 max-w-7xl mx-auto w-full border-b border-gray-800">
             <Link to="/" className="text-[#FF6600] font-bold text-xl tracking-wider">MIX CURRY</Link>
             <div className="space-x-8 text-sm font-semibold text-gray-300 hidden md:flex">
-                <Link to="/" className={isActive('/')}>Home</Link>
-                <Link to="/category" className={isActive('/category')}>Category</Link>
-                <Link to="/menu" className={isActive('/menu')}>Product</Link>
-                <Link to="/menu" className={isActive('/menu')}>Menu</Link>
-                <Link to="/blog" className={isActive('/blog')}>Blog</Link>
-                <Link to="/about" className={isActive('/about')}>About Us</Link>
+                <Link to="/" className={isActive('/')}>Trang chủ</Link>
+                <Link to="/category" className={isActive('/category')}>Danh mục</Link>
+                <Link to="/menu" className={isActive('/menu')}>Sản phẩm</Link>
+                <Link to="/menu" className={isActive('/menu')}>Thực đơn</Link>
+                <Link to="/blog" className={isActive('/blog')}>Tin tức</Link>
+                <Link to="/about" className={isActive('/about')}>Giới thiệu</Link>
             </div>
             <div className="flex items-center space-x-6">
                 {/* Search Bar */}
@@ -43,7 +43,7 @@ export default function Navbar() {
                 >
                     <input 
                         type="text" 
-                        placeholder="Search..." 
+                        placeholder="Tìm kiếm..." 
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         className="bg-[#1A1A1E] border border-gray-800 text-xs text-white px-4 py-2 pl-10 rounded-full focus:outline-none focus:border-[#FF6600] w-48 transition-all duration-300 focus:w-64"
@@ -61,17 +61,17 @@ export default function Navbar() {
                 </Link>
                 {user ? (
                     <>
-                        <Link to="/orders" className={`text-sm font-bold ${isActive('/orders')}`}>My Orders</Link>
+                        <Link to="/orders" className={`text-sm font-bold ${isActive('/orders')}`}>Đơn hàng</Link>
                         {user.role === 1 && (
-                            <Link to="/admin" className="text-sm font-bold text-[#FF6600] hover:underline transition">Admin Panel</Link>
+                            <Link to="/admin" className="text-sm font-bold text-[#FF6600] hover:underline transition">Quản trị</Link>
                         )}
-                        <span className="text-sm font-bold text-gray-300 hidden md:inline">Hi, {user.name}</span>
-                        <button onClick={logout} className="text-sm font-bold text-gray-300 hover:text-red-500 transition">Logout</button>
+                        <span className="text-sm font-bold text-gray-300 hidden md:inline">Chào, {user.name}</span>
+                        <button onClick={logout} className="text-sm font-bold text-gray-300 hover:text-red-500 transition">Đăng xuất</button>
                     </>
                 ) : (
                     <>
-                        <Link to="/login" className="text-sm font-bold text-gray-300 hover:text-[#FF6600] transition">Login</Link>
-                        <Link to="/register" className="px-5 py-2.5 bg-[#FF6600] text-black text-sm font-bold rounded-full hover:bg-orange-600 transition">Register</Link>
+                        <Link to="/login" className="text-sm font-bold text-gray-300 hover:text-[#FF6600] transition">Đăng nhập</Link>
+                        <Link to="/register" className="px-5 py-2.5 bg-[#FF6600] text-black text-sm font-bold rounded-full hover:bg-orange-600 transition">Đăng ký</Link>
                     </>
                 )}
             </div>

@@ -7,7 +7,7 @@ export default function Footer() {
                     <div className="col-span-1 lg:col-span-1">
                         <h2 className="text-2xl font-black tracking-tighter mb-6 uppercase">NOCTURNAL<br />KITCHEN</h2>
                         <p className="text-gray-500 text-sm leading-relaxed mb-8 max-w-xs">
-                            Redefining the digital dining experience through artisan storytelling and visual feast.
+                            Tái định nghĩa trải nghiệm ăn uống kỹ thuật số thông qua nghệ thuật kể chuyện và bữa tiệc thị giác.
                         </p>
                         <div className="flex space-x-4 text-gray-400">
                             <a href="#" className="hover:text-[#FF6600] transition">
@@ -24,37 +24,37 @@ export default function Footer() {
 
                     {/* Links - Manifesto */}
                     <div>
-                        <h3 className="text-[#FF6600] text-xs font-black uppercase tracking-[0.2em] mb-8">Manifesto</h3>
+                        <h3 className="text-[#FF6600] text-xs font-black uppercase tracking-[0.2em] mb-8">Tuyên ngôn</h3>
                         <ul className="space-y-4">
-                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">The Journal</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Chef Series</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Masterclasses</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Nhật ký</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Chuỗi đầu bếp</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Lớp học chuyên sâu</a></li>
                         </ul>
                     </div>
 
                     {/* Links - Connect */}
                     <div>
-                        <h3 className="text-[#FF6600] text-xs font-black uppercase tracking-[0.2em] mb-8">Connect</h3>
+                        <h3 className="text-[#FF6600] text-xs font-black uppercase tracking-[0.2em] mb-8">Kết nối</h3>
                         <ul className="space-y-4">
-                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Privacy Policy</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Terms of Service</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Shipping Info</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Chính sách bảo mật</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Điều khoản dịch vụ</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Thông tin vận chuyển</a></li>
                         </ul>
                     </div>
 
                     {/* Links - Explore */}
                     <div>
-                        <h3 className="text-[#FF6600] text-xs font-black uppercase tracking-[0.2em] mb-8">Explore</h3>
+                        <h3 className="text-[#FF6600] text-xs font-black uppercase tracking-[0.2em] mb-8">Khám phá</h3>
                         <ul className="space-y-4">
-                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Careers</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Sitemap</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Press Kit</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Tuyển dụng</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Sơ đồ trang</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-white text-sm transition">Bộ báo chí</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="pt-10 border-t border-gray-800/30 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest text-gray-600 font-bold">
-                    <p>&copy; 2026 NOCTURNAL KITCHEN EDITORIAL. ALL RIGHTS RESERVED.</p>
+                    <p>&copy; 2026 NOCTURNAL KITCHEN EDITORIAL. BẢO LƯU MỌI QUYỀN.</p>
                     <div className="flex space-x-8 mt-4 md:mt-0">
                         <a href="#" className="hover:text-white transition">Instagram</a>
                         <a href="#" className="hover:text-white transition">Pinterest</a>

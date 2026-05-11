@@ -31,7 +31,7 @@ export default function Register() {
             } else if (data?.message) {
                 setErrors([data.message]);
             } else {
-                setErrors(['Registration failed']);
+                setErrors(['Đăng ký thất bại']);
             }
         }
         setLoading(false);
@@ -42,15 +42,15 @@ export default function Register() {
             <nav className="flex items-center justify-between px-10 py-8 max-w-7xl mx-auto w-full">
                 <Link to="/" className="text-[#FF6600] font-bold text-xl tracking-wider">MIX CURRY</Link>
                 <div className="space-x-8 text-sm font-semibold text-gray-300 hidden md:flex">
-                    <Link to="/" className="hover:text-white transition">Home</Link>
-                    <Link to="/category" className="hover:text-white transition">Category</Link>
-                    <Link to="/menu" className="hover:text-white transition">Product</Link>
-                    <Link to="/menu" className="hover:text-white transition">Menu</Link>
-                    <Link to="/blog" className="hover:text-white transition">Blog</Link>
-                    <Link to="/about" className="hover:text-white transition">About Us</Link>
+                    <Link to="/" className="hover:text-white transition">Trang chủ</Link>
+                    <Link to="/category" className="hover:text-white transition">Danh mục</Link>
+                    <Link to="/menu" className="hover:text-white transition">Sản phẩm</Link>
+                    <Link to="/menu" className="hover:text-white transition">Thực đơn</Link>
+                    <Link to="/blog" className="hover:text-white transition">Tin tức</Link>
+                    <Link to="/about" className="hover:text-white transition">Giới thiệu</Link>
                 </div>
                 <div className="flex items-center space-x-6">
-                    <Link to="/login" className="text-sm font-bold text-gray-300 hover:text-[#FF6600] transition">Login</Link>
+                    <Link to="/login" className="text-sm font-bold text-gray-300 hover:text-[#FF6600] transition">Đăng nhập</Link>
                 </div>
             </nav>
 
@@ -58,8 +58,8 @@ export default function Register() {
                 <div className="w-full max-w-md bg-[#1A1A1E] rounded-[2rem] p-10 border border-gray-800/50 shadow-2xl relative overflow-hidden">
                     <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#FF6600] opacity-10 rounded-full blur-3xl pointer-events-none"></div>
                     <div className="relative z-10">
-                        <h1 className="text-3xl font-bold mb-2">Create Account</h1>
-                        <p className="text-gray-400 text-sm mb-8">Join MIX CURRY HOUSE today.</p>
+                        <h1 className="text-3xl font-bold mb-2">Tạo tài khoản</h1>
+                        <p className="text-gray-400 text-sm mb-8">Gia nhập MIX CURRY HOUSE ngay hôm nay.</p>
 
                         {errors.length > 0 && (
                             <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm">
@@ -71,23 +71,23 @@ export default function Register() {
 
                         <form onSubmit={handleSubmit} className="space-y-5">
                             <div>
-                                <label className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">Họ và tên</label>
                                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} required autoFocus className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] focus:ring-1 focus:ring-[#FF6600] transition text-sm" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-300 mb-2">Username</label>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">Tên đăng nhập</label>
                                 <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] focus:ring-1 focus:ring-[#FF6600] transition text-sm" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-300 mb-2">Phone Number</label>
-                                <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Optional" className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] focus:ring-1 focus:ring-[#FF6600] transition text-sm" />
+                                <label className="block text-sm font-medium text-gray-300 mb-2">Số điện thoại</label>
+                                <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Tùy chọn" className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] focus:ring-1 focus:ring-[#FF6600] transition text-sm" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-300 mb-2">Address</label>
-                                <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Delivery Address" className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] focus:ring-1 focus:ring-[#FF6600] transition text-sm" />
+                                <label className="block text-sm font-medium text-gray-300 mb-2">Địa chỉ</label>
+                                <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Địa chỉ giao hàng" className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] focus:ring-1 focus:ring-[#FF6600] transition text-sm" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">Mật khẩu</label>
                                 <div className="relative">
                                     <input type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} required className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] focus:ring-1 focus:ring-[#FF6600] transition text-sm pr-12" />
                                     <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#FF6600] transition">
@@ -100,7 +100,7 @@ export default function Register() {
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-300 mb-2">Confirm Password</label>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">Xác nhận mật khẩu</label>
                                 <div className="relative">
                                     <input type={showConfirmPassword ? "text" : "password"} value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)} required className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] focus:ring-1 focus:ring-[#FF6600] transition text-sm pr-12" />
                                     <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#FF6600] transition">
@@ -114,13 +114,13 @@ export default function Register() {
                             </div>
                             <div className="pt-4">
                                 <button type="submit" disabled={loading} className="w-full bg-[#FF6600] text-black font-bold py-3.5 rounded-xl hover:bg-orange-600 transition shadow-[0_0_20px_rgba(255,102,0,0.3)] disabled:opacity-50">
-                                    {loading ? 'Creating...' : 'Sign Up'}
+                                    {loading ? 'Đang tạo...' : 'Đăng ký'}
                                 </button>
                             </div>
                         </form>
 
                         <div className="mt-8 text-center text-sm text-gray-400">
-                            Already have an account? <Link to="/login" className="text-[#FF6600] font-semibold hover:underline">Sign In</Link>
+                            Đã có tài khoản? <Link to="/login" className="text-[#FF6600] font-semibold hover:underline">Đăng nhập</Link>
                         </div>
                     </div>
                 </div>

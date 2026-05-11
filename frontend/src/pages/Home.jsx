@@ -23,7 +23,7 @@ export default function Home() {
 
     const handleAdd = (item) => {
         const name = addToCart(item.id, item.name, item.price, getImageUrl(item));
-        toast(name + ' added!');
+        toast(name + ' đã được thêm!');
     };
 
     return (
@@ -38,16 +38,16 @@ export default function Home() {
                             {banners.hero?.title ? (
                                 <span dangerouslySetInnerHTML={{ __html: banners.hero.title }}></span>
                             ) : (
-                                <>The Art of <br /><span className="text-[#FF6600] font-serif italic text-7xl">Saffron Risotto.</span></>
+                                <>Nghệ thuật của <br /><span className="text-[#FF6600] font-serif italic text-7xl">Saffron Risotto.</span></>
                             )}
                         </h1>
                         <p className="text-gray-400 text-sm mb-10 max-w-sm leading-relaxed">
-                            {banners.hero?.content || 'Experience the rich, aromatic flavors of our signature Saffron Risotto, crafted with the finest ingredients for a truly unforgettable dining experience.'}
+                            {banners.hero?.content || 'Trải nghiệm hương vị đậm đà, thơm nồng của Saffron Risotto đặc trưng, được chế biến từ những nguyên liệu tốt nhất cho một trải nghiệm ẩm thực khó quên.'}
                         </p>
                         <div className="flex items-center space-x-6">
-                            <Link to="/menu" className="px-8 py-4 bg-[#FF6600] text-black font-bold rounded-full hover:bg-orange-600 transition inline-block">Order Now</Link>
+                            <Link to="/menu" className="px-8 py-4 bg-[#FF6600] text-black font-bold rounded-full hover:bg-orange-600 transition inline-block">Đặt hàng ngay</Link>
                             <Link to="/menu" className="text-sm font-semibold hover:text-[#FF6600] transition flex items-center">
-                                Explore Menu
+                                Khám phá thực đơn
                                 <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
                             </Link>
                         </div>
@@ -58,7 +58,7 @@ export default function Home() {
                         </div>
                         <div className="absolute top-10 right-0 bg-[#FF6600]/10 backdrop-blur-md px-6 py-3 rounded-2xl border border-[#FF6600]/20 flex items-center space-x-3">
                             <div className="w-2 h-2 bg-[#FF6600] rounded-full"></div>
-                            <span className="text-white font-semibold text-sm">Signature dish</span>
+                            <span className="text-white font-semibold text-sm">Món đặc trưng</span>
                         </div>
                     </div>
                 </section>
@@ -67,10 +67,10 @@ export default function Home() {
                 <section className="max-w-7xl mx-auto px-10 py-20 mt-10">
                     <div className="flex justify-between items-end mb-10 border-b border-gray-800/50 pb-6">
                         <div>
-                            <h2 className="text-3xl font-bold mb-2">Trending Ideas</h2>
-                            <p className="text-gray-500 text-sm">Discover what our community is loving today.</p>
+                            <h2 className="text-3xl font-bold mb-2">Xu hướng thịnh hành</h2>
+                            <p className="text-gray-500 text-sm">Khám phá những gì cộng đồng đang yêu thích hôm nay.</p>
                         </div>
-                        <Link to="/menu" className="text-[#FF6600] text-sm font-semibold hover:underline flex items-center">See all <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg></Link>
+                        <Link to="/menu" className="text-[#FF6600] text-sm font-semibold hover:underline flex items-center">Xem tất cả <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg></Link>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {trending.map((item) => (
@@ -83,7 +83,7 @@ export default function Home() {
                                     />
                                 </div>
                                 <div className="flex-grow w-full">
-                                    <div className="text-xs text-[#FF6600] font-bold mb-2 uppercase tracking-wide">{item.category?.name || 'Featured'}</div>
+                                    <div className="text-xs text-[#FF6600] font-bold mb-2 uppercase tracking-wide">{item.category?.name || 'Nổi bật'}</div>
                                     <h3 className="text-xl font-bold mb-2 group-hover:text-[#FF6600] transition line-clamp-1">{item.name}</h3>
                                     <p className="text-gray-400 text-sm mb-4 line-clamp-1">{item.desc}</p>
                                     <div className="flex justify-between items-center mt-auto">
@@ -101,7 +101,7 @@ export default function Home() {
                 {/* Specials */}
                 <section className="bg-[#141416] py-20 border-y border-gray-800/50">
                     <div className="max-w-7xl mx-auto px-10">
-                        <h2 className="text-3xl font-bold mb-10 text-center">Chef's Specials</h2>
+                        <h2 className="text-3xl font-bold mb-10 text-center">Đặc sản của đầu bếp</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
                             {specials.map((s) => (
                                 <div key={s.id} className="bg-[#1A1A1E] border border-gray-800/50 rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300 flex flex-col group h-full cursor-pointer hover:border-[#FF6600]/30 shadow-lg relative">
@@ -128,7 +128,7 @@ export default function Home() {
                                 <div className="w-16 h-16 rounded-full border border-[#FF6600] group-hover:bg-black group-hover:border-black flex items-center justify-center mb-4 text-[#FF6600]">
                                     <svg className="w-8 h-8 group-hover:text-[#FF6600] transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                                 </div>
-                                <h3 className="font-bold text-center text-[#FF6600] group-hover:text-black transition">Explore Full<br />Menu Collection</h3>
+                                <h3 className="font-bold text-center text-[#FF6600] group-hover:text-black transition">Khám phá<br />toàn bộ thực đơn</h3>
                             </div>
                         </div>
                     </div>
@@ -146,23 +146,23 @@ export default function Home() {
                     </div>
                     
                     <div className="relative z-10 max-w-4xl mx-auto px-10 text-center">
-                        <h2 className="text-5xl md:text-6xl font-black mb-6 tracking-tighter uppercase">Stay in the kitchen.</h2>
+                        <h2 className="text-5xl md:text-6xl font-black mb-6 tracking-tighter uppercase">Luôn đồng hành cùng nhà bếp.</h2>
                         <p className="text-gray-300 text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
-                            Join 25,000+ culinary enthusiasts. Receive exclusive recipes, chef interviews, and secret table bookings directly in your inbox.
+                            Tham gia cùng hơn 25.000+ người đam mê ẩm thực. Nhận các công thức nấu ăn độc quyền, các cuộc phỏng vấn đầu bếp và đặt bàn bí mật trực tiếp trong hộp thư của bạn.
                         </p>
                         
                         <div className="flex flex-col sm:flex-row items-stretch justify-center max-w-md mx-auto mb-6 bg-[#1A1A1E] p-1 rounded-xl sm:rounded-full border border-gray-800">
                             <input 
                                 type="email" 
-                                placeholder="Enter your email address" 
+                                placeholder="Nhập địa chỉ email của bạn" 
                                 className="bg-transparent border-none focus:ring-0 px-6 py-4 flex-grow text-white placeholder-gray-500"
                             />
                             <button className="bg-[#FF6600] hover:bg-orange-600 text-black font-black px-8 py-4 rounded-lg sm:rounded-full transition-all uppercase tracking-wider text-sm">
-                                Subscribe Now
+                                Đăng ký ngay
                             </button>
                         </div>
                         
-                        <p className="text-[10px] text-gray-500 font-bold tracking-[0.2em] uppercase">No spam. Only flavor.</p>
+                        <p className="text-[10px] text-gray-500 font-bold tracking-[0.2em] uppercase">Không spam. Chỉ có hương vị.</p>
                     </div>
                 </section>
             </main>

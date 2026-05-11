@@ -36,7 +36,7 @@ export default function Cart() {
 
     const handleCheckout = async (e) => {
         e.preventDefault();
-        if (cart.length === 0) return alert('Cart is empty!');
+        if (cart.length === 0) return alert('Giỏ hàng trống!');
         if (!user) return navigate('/login');
 
         setSubmitting(true);
@@ -48,12 +48,12 @@ export default function Cart() {
                 items: cart.map((i) => ({ id: i.id, amount: i.amount })),
             });
             if (res.data.success) {
-                toast('Order Placed Successfully!', 'success');
+                toast('Đặt hàng thành công!', 'success');
                 clearCart();
                 setTimeout(() => navigate('/'), 1500);
             }
         } catch (err) {
-            toast(err.response?.data?.message || 'Error placing order', 'error');
+            toast(err.response?.data?.message || 'Lỗi khi đặt hàng', 'error');
         }
         setSubmitting(false);
     };
@@ -63,13 +63,13 @@ export default function Cart() {
             <Navbar />
             <main className="flex-grow max-w-7xl mx-auto px-10 py-12 w-full grid grid-cols-1 lg:grid-cols-3 gap-10">
                 <div className="lg:col-span-2">
-                    <h1 className="text-4xl font-bold mb-8">Shopping Cart</h1>
+                    <h1 className="text-4xl font-bold mb-8">Giỏ hàng</h1>
                     {cart.length === 0 ? (
                         <div className="text-center py-20 text-gray-500">
                             <svg className="w-20 h-20 mx-auto mb-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                            <h3 className="text-2xl font-bold text-white mb-2">Cart is Empty</h3>
-                            <p className="mb-6">Looks like you haven't added anything to your cart yet.</p>
-                            <Link to="/menu" className="px-8 py-3 bg-[#FF6600] text-black font-bold rounded-full hover:bg-orange-600 transition inline-block">Browse Menu</Link>
+                            <h3 className="text-2xl font-bold text-white mb-2">Giỏ hàng trống</h3>
+                            <p className="mb-6">Có vẻ như bạn chưa thêm gì vào giỏ hàng.</p>
+                            <Link to="/menu" className="px-8 py-3 bg-[#FF6600] text-black font-bold rounded-full hover:bg-orange-600 transition inline-block">Xem thực đơn</Link>
                         </div>
                     ) : (
                         <div className="space-y-6">
@@ -101,26 +101,26 @@ export default function Cart() {
                 </div>
 
                 <div className="bg-[#1A1A1E] rounded-3xl p-8 border border-gray-800/50 h-fit">
-                    <h2 className="text-2xl font-bold mb-6 border-b border-gray-800 pb-4">Checkout</h2>
+                    <h2 className="text-2xl font-bold mb-6 border-b border-gray-800 pb-4">Thanh toán</h2>
                     <div className="flex justify-between items-center mb-4">
-                        <span className="text-gray-400">Total Items:</span>
+                        <span className="text-gray-400">Tổng sản phẩm:</span>
                         <span className="font-bold">{count}</span>
                     </div>
                     <div className="flex justify-between items-center mb-8 pb-6 border-b border-gray-800">
-                        <span className="text-gray-400">Order Total:</span>
+                        <span className="text-gray-400">Tổng cộng:</span>
                         <span className="font-bold text-[#FF6600] text-3xl">${total.toFixed(2)}</span>
                     </div>
                     <form onSubmit={handleCheckout} className="space-y-5">
                         <div>
-                            <label className="block mb-2 text-sm text-gray-400 font-semibold">Phone Number *</label>
+                            <label className="block mb-2 text-sm text-gray-400 font-semibold">Số điện thoại *</label>
                             <input required type="text" value={receiver} onChange={(e) => setReceiver(e.target.value)} className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 outline-none focus:border-[#FF6600] transition" />
                         </div>
                         <div>
-                            <label className="block mb-2 text-sm text-gray-400 font-semibold">Address *</label>
+                            <label className="block mb-2 text-sm text-gray-400 font-semibold">Địa chỉ *</label>
                             <input required type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 outline-none focus:border-[#FF6600] transition" />
                         </div>
                         <button type="submit" disabled={submitting} className="w-full py-4 bg-[#FF6600] text-black font-bold rounded-xl hover:bg-orange-600 transition text-lg mt-6 disabled:opacity-50">
-                            {submitting ? 'Processing...' : 'Place Order'}
+                            {submitting ? 'Đang xử lý...' : 'Đặt hàng'}
                         </button>
                     </form>
                 </div>

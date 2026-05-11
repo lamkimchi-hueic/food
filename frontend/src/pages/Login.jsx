@@ -26,7 +26,7 @@ export default function Login() {
             } else if (data?.message) {
                 setErrors([data.message]);
             } else {
-                setErrors(['Login failed']);
+                setErrors(['Đăng nhập thất bại']);
             }
         }
         setLoading(false);
@@ -37,15 +37,15 @@ export default function Login() {
             <nav className="flex items-center justify-between px-10 py-8 max-w-7xl mx-auto w-full">
                 <Link to="/" className="text-[#FF6600] font-bold text-xl tracking-wider">MIX CURRY</Link>
                 <div className="space-x-8 text-sm font-semibold text-gray-300 hidden md:flex">
-                    <Link to="/" className="hover:text-white transition">Home</Link>
-                    <Link to="/category" className="hover:text-white transition">Category</Link>
-                    <Link to="/menu" className="hover:text-white transition">Product</Link>
-                    <Link to="/menu" className="hover:text-white transition">Menu</Link>
-                    <Link to="/blog" className="hover:text-white transition">Blog</Link>
-                    <Link to="/about" className="hover:text-white transition">About Us</Link>
+                    <Link to="/" className="hover:text-white transition">Trang chủ</Link>
+                    <Link to="/category" className="hover:text-white transition">Danh mục</Link>
+                    <Link to="/menu" className="hover:text-white transition">Sản phẩm</Link>
+                    <Link to="/menu" className="hover:text-white transition">Thực đơn</Link>
+                    <Link to="/blog" className="hover:text-white transition">Tin tức</Link>
+                    <Link to="/about" className="hover:text-white transition">Giới thiệu</Link>
                 </div>
                 <div className="flex items-center space-x-6">
-                    <Link to="/register" className="text-sm font-bold text-gray-300 hover:text-[#FF6600] transition">Register</Link>
+                    <Link to="/register" className="text-sm font-bold text-gray-300 hover:text-[#FF6600] transition">Đăng ký</Link>
                 </div>
             </nav>
 
@@ -53,8 +53,8 @@ export default function Login() {
                 <div className="w-full max-w-md bg-[#1A1A1E] rounded-[2rem] p-10 border border-gray-800/50 shadow-2xl relative overflow-hidden">
                     <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#FF6600] opacity-10 rounded-full blur-3xl pointer-events-none"></div>
                     <div className="relative z-10">
-                        <h1 className="text-3xl font-bold mb-2">Welcome Back</h1>
-                        <p className="text-gray-400 text-sm mb-8">Please enter your credentials to login.</p>
+                        <h1 className="text-3xl font-bold mb-2">Chào mừng trở lại</h1>
+                        <p className="text-gray-400 text-sm mb-8">Vui lòng nhập thông tin của bạn để đăng nhập.</p>
 
                         {errors.length > 0 && (
                             <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm">
@@ -66,11 +66,11 @@ export default function Login() {
 
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
-                                <label className="block text-sm font-medium text-gray-300 mb-2">Username</label>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">Tên đăng nhập</label>
                                 <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required autoFocus className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] focus:ring-1 focus:ring-[#FF6600] transition text-sm" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">Mật khẩu</label>
                                 <div className="relative">
                                     <input type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} required className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] focus:ring-1 focus:ring-[#FF6600] transition text-sm pr-12" />
                                     <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#FF6600] transition">
@@ -84,13 +84,13 @@ export default function Login() {
                             </div>
                             <div className="pt-2">
                                 <button type="submit" disabled={loading} className="w-full bg-[#FF6600] text-black font-bold py-3.5 rounded-xl hover:bg-orange-600 transition shadow-[0_0_20px_rgba(255,102,0,0.3)] disabled:opacity-50">
-                                    {loading ? 'Signing in...' : 'Sign In'}
+                                    {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
                                 </button>
                             </div>
                         </form>
 
                         <div className="mt-8 text-center text-sm text-gray-400">
-                            Don't have an account? <Link to="/register" className="text-[#FF6600] font-semibold hover:underline">Register here</Link>
+                            Chưa có tài khoản? <Link to="/register" className="text-[#FF6600] font-semibold hover:underline">Đăng ký tại đây</Link>
                         </div>
                     </div>
                 </div>

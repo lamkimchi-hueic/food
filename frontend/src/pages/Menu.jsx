@@ -50,7 +50,7 @@ export default function Menu() {
 
     const handleAdd = (p) => {
         const name = addToCart(p.id, p.name, p.price, getImageUrl(p));
-        toast(name + ' added to cart!');
+        toast(name + ' đã được thêm vào giỏ hàng!');
     };
 
     return (
@@ -59,9 +59,9 @@ export default function Menu() {
             <ToastContainer />
             <main className="flex-grow max-w-7xl mx-auto px-10 py-12 w-full">
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-                    <h1 className="text-4xl font-bold">Our Full Menu</h1>
+                    <h1 className="text-4xl font-bold">Thực đơn đầy đủ</h1>
                     <form onSubmit={handleSearch} className="relative w-full md:w-96">
-                        <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search for dishes..." className="w-full bg-[#1A1A1E] border border-gray-800 text-white rounded-full pl-6 pr-12 py-3 focus:outline-none focus:border-[#FF6600] transition" />
+                        <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Tìm kiếm món ăn..." className="w-full bg-[#1A1A1E] border border-gray-800 text-white rounded-full pl-6 pr-12 py-3 focus:outline-none focus:border-[#FF6600] transition" />
                         <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center text-gray-400 hover:text-[#FF6600] transition">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                         </button>
@@ -69,7 +69,7 @@ export default function Menu() {
                 </div>
 
                 <div className="flex mb-10 overflow-x-auto space-x-4 pb-2">
-                    <button onClick={() => setCategory('')} className={`px-6 py-2 rounded-full font-semibold transition whitespace-nowrap ${!activeCategory ? 'bg-[#FF6600] text-black' : 'bg-gray-800 text-white hover:bg-gray-700'}`}>All Items</button>
+                    <button onClick={() => setCategory('')} className={`px-6 py-2 rounded-full font-semibold transition whitespace-nowrap ${!activeCategory ? 'bg-[#FF6600] text-black' : 'bg-gray-800 text-white hover:bg-gray-700'}`}>Tất cả</button>
                     {categories.map((cat) => (
                         <button key={cat.id} onClick={() => setCategory(cat.id)} className={`px-6 py-2 rounded-full font-semibold transition whitespace-nowrap ${activeCategory == cat.id ? 'bg-[#FF6600] text-black' : 'bg-gray-800 text-white hover:bg-gray-700'}`}>{cat.name}</button>
                     ))}

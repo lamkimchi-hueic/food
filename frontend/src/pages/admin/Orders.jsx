@@ -21,24 +21,24 @@ export default function AdminOrders() {
         if (!confirm('Delete this order?')) return;
         try {
             await api.delete(`/admin/orders/${id}`);
-            setToast({ type: 'success', message: 'Order deleted successfully' });
+            setToast({ type: 'success', message: 'Xóa đơn hàng thành công' });
             load();
         } catch (err) {
-            setToast({ type: 'error', message: 'Delete failed' });
+            setToast({ type: 'error', message: 'Xóa thất bại' });
         }
     };
 
     const handleStatusChange = async (id, status) => {
         try {
             await api.put(`/admin/orders/${id}`, { status });
-            setToast({ type: 'success', message: 'Order status updated' });
+            setToast({ type: 'success', message: 'Cập nhật trạng thái thành công' });
             load();
         } catch (err) {
-            setToast({ type: 'error', message: 'Update failed' });
+            setToast({ type: 'error', message: 'Cập nhật thất bại' });
         }
     };
 
-    const statusLabels = { 0: 'Pending', 1: 'Confirmed', 2: 'Delivered', 3: 'Cancelled' };
+    const statusLabels = { 0: 'Đang chờ', 1: 'Đã xác nhận', 2: 'Đã giao hàng', 3: 'Đã hủy' };
     const statusColors = { 0: 'text-yellow-500 bg-yellow-500/10 border-yellow-500/20', 1: 'text-blue-500 bg-blue-500/10 border-blue-500/20', 2: 'text-green-500 bg-green-500/10 border-green-500/20', 3: 'text-red-500 bg-red-500/10 border-red-500/20' };
 
     return (
@@ -46,22 +46,22 @@ export default function AdminOrders() {
             <nav className="flex items-center justify-between px-10 py-6 max-w-7xl mx-auto w-full border-b border-gray-800">
                 <Link to="/admin" className="text-[#FF6600] font-bold text-xl tracking-wider">MIX CURRY <span className="text-white text-xs ml-2 border border-gray-700 px-2 py-0.5 rounded">ADMIN</span></Link>
                 <div className="flex items-center space-x-6">
-                    <Link to="/admin" className="text-sm font-bold text-gray-400 hover:text-white transition">Dashboard</Link>
-                    <button onClick={logout} className="text-sm font-bold text-gray-400 hover:text-red-500 transition">Logout</button>
+                    <Link to="/admin" className="text-sm font-bold text-gray-400 hover:text-white transition">Bảng điều khiển</Link>
+                    <button onClick={logout} className="text-sm font-bold text-gray-400 hover:text-red-500 transition">Đăng xuất</button>
                 </div>
             </nav>
 
             <main className="flex-grow max-w-7xl mx-auto px-10 py-12 w-full">
-                <h1 className="text-3xl font-bold mb-8">Manage <span className="text-[#FF6600]">Orders</span></h1>
+                <h1 className="text-3xl font-bold mb-8">Quản lý <span className="text-[#FF6600]">Đơn hàng</span></h1>
 
                 <div className="space-y-4">
-                    {orders.length === 0 && <p className="text-gray-400 text-center py-10">No orders yet.</p>}
+                    {orders.length === 0 && <p className="text-gray-400 text-center py-10">Chưa có đơn hàng nào.</p>}
                     {orders.map((order) => (
                         <div key={order.id} className="bg-[#1A1A1E] p-6 rounded-2xl border border-gray-800">
                             <div className="flex items-center justify-between mb-4">
                                 <div>
-                                    <h3 className="font-bold text-lg">Order #{order.id}</h3>
-                                    <p className="text-gray-400 text-sm">Receiver: {order.receiver} &bull; User: {order.user?.name || 'N/A'}</p>
+                                    <h3 className="font-bold text-lg">Đơn hàng #{order.id}</h3>
+                                    <p className="text-gray-400 text-sm">Người nhận: {order.receiver} &bull; Người dùng: {order.user?.name || 'N/A'}</p>
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <select
@@ -69,12 +69,12 @@ export default function AdminOrders() {
                                         onChange={(e) => handleStatusChange(order.id, parseInt(e.target.value))}
                                         className={`px-3 py-1 rounded-full text-xs font-bold border ${statusColors[order.status] || statusColors[0]} bg-transparent`}
                                     >
-                                        <option value={0}>Pending</option>
-                                        <option value={1}>Confirmed</option>
-                                        <option value={2}>Delivered</option>
-                                        <option value={3}>Cancelled</option>
+                                        <option value={0}>Đang chờ</option>
+                                        <option value={1}>Đã xác nhận</option>
+                                        <option value={2}>Đã giao hàng</option>
+                                        <option value={3}>Đã hủy</option>
                                     </select>
-                                    <button onClick={() => handleDelete(order.id)} className="px-4 py-2 bg-gray-800 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition text-sm font-bold">Delete</button>
+                                    <button onClick={() => handleDelete(order.id)} className="px-4 py-2 bg-gray-800 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition text-sm font-bold">Xóa</button>
                                 </div>
                             </div>
                             {order.order_items && order.order_items.length > 0 && (
