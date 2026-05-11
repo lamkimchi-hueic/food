@@ -9,6 +9,8 @@ export default function AdminOrders() {
     const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
     const [filterStatus, setFilterStatus] = useState('all');
+    const [editOrder, setEditOrder] = useState(null);
+    const [form, setForm] = useState({ receiver: '', phone: '', address: '', status: 0 });
 
     useEffect(() => {
         if (!user || user.role !== 1) { navigate('/'); return; }
@@ -32,6 +34,28 @@ export default function AdminOrders() {
         try {
             await api.put(`/admin/orders/${id}`, { status });
             toast('Cập nhật trạng thái thành công');
+            load();
+        } catch (err) {
+            toast('Cập nhật thất bại', 'error');
+        }
+    };
+
+    const startEdit = (order) => {
+        setEditOrder(order);
+        setForm({
+            receiver: order.receiver,
+            phone: order.phone || '',
+            address: order.address || '',
+            status: order.status
+        });
+    };
+
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        try {
+            await api.put(`/admin/orders/${editOrder.id}`, form);
+            toast('Cập nhật thông tin đơn hàng thành công');
+            setEditOrder(null);
             load();
         } catch (err) {
             toast('Cập nhật thất bại', 'error');
@@ -95,6 +119,7 @@ export default function AdminOrders() {
                                         <option value={2}>Đã giao hàng</option>
                                         <option value={3}>Đã hủy</option>
                                     </select>
+                                    <button onClick={() => startEdit(order)} className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-[#FF6600] hover:text-black transition text-sm font-bold">Sửa</button>
                                     <button onClick={() => handleDelete(order.id)} className="px-4 py-2 bg-gray-800 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition text-sm font-bold">Xóa</button>
                                 </div>
                             </div>
@@ -112,6 +137,61 @@ export default function AdminOrders() {
                     ))}
                 </div>
             </main>
+
+            {editOrder && (
+                <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+                    <div className="bg-[#1A1A1E] border border-gray-800 rounded-[2rem] p-8 max-w-lg w-full shadow-2xl">
+                        <h2 className="text-2xl font-bold mb-6">Chỉnh sửa <span className="text-[#FF6600]">Đơn hàng #{editOrder.id}</span></h2>
+                        <form onSubmit={handleUpdate} className="space-y-4">
+                            <div>
+                                <label className="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Người nhận</label>
+                                <input 
+                                    type="text" 
+                                    value={form.receiver} 
+                                    onChange={(e) => setForm({ ...form, receiver: e.target.value })} 
+                                    className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] transition" 
+                                    required 
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Số điện thoại</label>
+                                <input 
+                                    type="text" 
+                                    value={form.phone} 
+                                    onChange={(e) => setForm({ ...form, phone: e.target.value })} 
+                                    className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] transition" 
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Địa chỉ</label>
+                                <textarea 
+                                    value={form.address} 
+                                    onChange={(e) => setForm({ ...form, address: e.target.value })} 
+                                    className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] transition h-24" 
+                                    required
+                                ></textarea>
+                            </div>
+                            <div>
+                                <label className="block text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Trạng thái</label>
+                                <select 
+                                    value={form.status} 
+                                    onChange={(e) => setForm({ ...form, status: parseInt(e.target.value) })} 
+                                    className="w-full bg-[#0F0F11] border border-gray-800 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF6600] transition"
+                                >
+                                    <option value={0}>Đang chờ</option>
+                                    <option value={1}>Đã xác nhận</option>
+                                    <option value={2}>Đã giao hàng</option>
+                                    <option value={3}>Đã hủy</option>
+                                </select>
+                            </div>
+                            <div className="flex space-x-3 pt-4">
+                                <button type="submit" className="flex-grow bg-[#FF6600] text-black font-black py-4 rounded-xl hover:bg-orange-600 transition uppercase tracking-widest text-sm">Lưu thay đổi</button>
+                                <button type="button" onClick={() => setEditOrder(null)} className="px-8 bg-gray-800 text-white font-bold rounded-xl hover:bg-gray-700 transition uppercase tracking-widest text-xs">Hủy</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -43,6 +43,8 @@ class OrderController extends Controller
             'desc' => 'nullable|string|max:45',
             'status' => 'nullable|integer',
             'receiver' => 'sometimes|string|max:45',
+            'phone' => 'sometimes|string|max:45',
+            'address' => 'sometimes|string|max:255',
         ]);
 
         $order->update($validated);
