@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useAuth } from '../context/AuthContext';
 import api from '../api';
+import { formatCurrency } from '../utils/cart';
 
 export default function Orders() {
     const { user, loading } = useAuth();
@@ -82,7 +83,7 @@ export default function Orders() {
                                                 </span>
                                                 <div className="text-right">
                                                     <div className="text-xs text-gray-500 font-black uppercase tracking-widest mb-1">Tổng số tiền</div>
-                                                    <div className="text-2xl font-black text-[#FF6600]">${total.toFixed(2)}</div>
+                                                    <div className="text-2xl font-black text-[#FF6600]">{formatCurrency(total)}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -97,9 +98,9 @@ export default function Orders() {
                                                         </div>
                                                         <div className="flex-grow">
                                                             <div className="font-bold text-sm line-clamp-1">{item.product?.name}</div>
-                                                            <div className="text-gray-500 text-xs">SL: {item.amount} &bull; ${parseFloat(item.product?.price || 0).toFixed(2)} ea</div>
+                                                            <div className="text-gray-500 text-xs">SL: {item.amount} &bull; {formatCurrency(item.product?.price || 0)} ea</div>
                                                         </div>
-                                                        <div className="font-black text-[#FF6600] text-sm">${(item.amount * (item.product?.price || 0)).toFixed(2)}</div>
+                                                        <div className="font-black text-[#FF6600] text-sm">{formatCurrency(item.amount * (item.product?.price || 0))}</div>
                                                     </div>
                                                 ))}
                                             </div>

@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ToastContainer, { toast } from '../components/Toast';
 import api from '../api';
-import { addToCart, getImageUrl } from '../utils/cart';
+import { addToCart, getImageUrl, formatCurrency } from '../utils/cart';
 
 export default function Detail() {
     const { id } = useParams();
@@ -43,7 +43,7 @@ export default function Detail() {
 
                     <div>
                         <h1 className="text-5xl font-bold mb-4">{product.name}</h1>
-                        <p className="text-[#FF6600] text-4xl font-bold mb-8">${parseFloat(product.price).toFixed(2)}</p>
+                        <p className="text-[#FF6600] text-4xl font-bold mb-8">{formatCurrency(product.price)}</p>
                         <p className="text-gray-400 leading-relaxed mb-10 text-lg">{product.desc}</p>
 
                         <div className="flex items-center space-x-6">

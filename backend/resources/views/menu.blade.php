@@ -73,7 +73,7 @@
                     <h3 class="text-xl font-bold mb-2">{{ $product->name }}</h3>
                     <p class="text-gray-400 text-sm mb-6 flex-grow">{{ Str::limit($product->desc, 60) }}</p>
                     <div class="flex justify-between items-center mt-auto">
-                        <span class="text-[#FF6600] font-bold text-xl">${{ number_format($product->price, 2) }}</span>
+                        <span class="text-[#FF6600] font-bold text-xl">{{ number_format($product->price, 0, ',', '.') }} đ</span>
                         <button onclick="addToCart({{ $product->id }}, '{{ addslashes($product->name) }}', {{ $product->price }}, '{{ $imageUrl }}')" class="w-12 h-12 bg-gray-800 hover:bg-[#FF6600] hover:text-black text-white font-semibold rounded-full transition flex justify-center items-center group-hover:rotate-90">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                         </button>

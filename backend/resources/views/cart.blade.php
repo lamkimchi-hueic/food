@@ -55,7 +55,7 @@
             </div>
             <div class="flex justify-between items-center mb-8 pb-6 border-b border-gray-800">
                 <span class="text-gray-400">Order Total:</span>
-                <span id="summary-total" class="font-bold text-[#FF6600] text-3xl">$0.00</span>
+                <span id="summary-total" class="font-bold text-[#FF6600] text-3xl">0 đ</span>
             </div>
 
             <form id="checkout-form" class="space-y-5">
@@ -84,7 +84,7 @@
                 container.innerHTML = '';
                 emptyState.classList.remove('hidden');
                 document.getElementById('summary-count').innerText = '0';
-                document.getElementById('summary-total').innerText = '$0.00';
+                document.getElementById('summary-total').innerText = '0 đ';
                 return;
             }
 
@@ -106,7 +106,7 @@
                     </div>
                     <div class="flex-grow">
                         <h3 class="text-xl font-bold line-clamp-1">${item.name}</h3>
-                        <p class="text-[#FF6600] font-bold text-lg mt-1">$${parseFloat(item.price).toFixed(2)}</p>
+                        <p class="text-[#FF6600] font-bold text-lg mt-1">${parseFloat(item.price).toLocaleString('vi-VN')} đ</p>
                     </div>
                     <div class="flex items-center space-x-4 bg-[#0F0F11] px-4 py-2 rounded-full border border-gray-800">
                         <button onclick="updateAmount(${index}, -1)" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#FF6600] hover:text-black transition">
@@ -127,7 +127,7 @@
             });
 
             document.getElementById('summary-count').innerText = count;
-            document.getElementById('summary-total').innerText = '$' + total.toFixed(2);
+            document.getElementById('summary-total').innerText = total.toLocaleString('vi-VN') + ' đ';
         }
 
         function updateAmount(index, change) {

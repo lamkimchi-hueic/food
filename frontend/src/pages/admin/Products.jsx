@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../api';
-import { getImageUrl } from '../../utils/cart';
+import { getImageUrl, formatCurrency } from '../../utils/cart';
 import Toast from '../../components/Toast';
 
 export default function AdminProducts() {
@@ -106,7 +106,7 @@ export default function AdminProducts() {
                             </div>
                             <div className="flex-grow">
                                 <h3 className="font-bold">{p.name}</h3>
-                                <p className="text-gray-400 text-sm">{p.category?.name} &bull; ${parseFloat(p.price).toFixed(2)}</p>
+                                <p className="text-gray-400 text-sm">{p.category?.name} &bull; {formatCurrency(p.price)}</p>
                             </div>
                             <div className="flex space-x-3">
                                 <button onClick={() => handleEdit(p)} className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-[#FF6600] hover:text-black transition text-sm font-bold">Sửa</button>

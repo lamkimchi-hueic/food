@@ -56,7 +56,7 @@
 
             <div>
                 <h1 class="text-5xl font-bold mb-4">{{ $product->name }}</h1>
-                <p class="text-[#FF6600] text-4xl font-bold mb-8">${{ number_format($product->price, 2) }}</p>
+                <p class="text-[#FF6600] text-4xl font-bold mb-8">{{ number_format($product->price, 0, ',', '.') }} đ</p>
                 <p class="text-gray-400 leading-relaxed mb-10 text-lg">{{ $product->desc }}</p>
 
                 <div class="flex items-center space-x-6">

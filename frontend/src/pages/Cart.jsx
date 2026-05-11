@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import { useAuth } from '../context/AuthContext';
 import api from '../api';
 import { toast } from '../components/Toast';
-import { getCart, saveCart, removeFromCart, updateCartAmount, clearCart, getImageUrl } from '../utils/cart';
+import { getCart, saveCart, removeFromCart, updateCartAmount, clearCart, getImageUrl, formatCurrency } from '../utils/cart';
 
 export default function Cart() {
     const [cart, setCart] = useState([]);
@@ -80,7 +80,7 @@ export default function Cart() {
                                     </div>
                                     <div className="flex-grow">
                                         <h3 className="text-xl font-bold line-clamp-1">{item.name}</h3>
-                                        <p className="text-[#FF6600] font-bold text-lg mt-1">${parseFloat(item.price).toFixed(2)}</p>
+                                        <p className="text-[#FF6600] font-bold text-lg mt-1">{formatCurrency(item.price)}</p>
                                     </div>
                                     <div className="flex items-center space-x-4 bg-[#0F0F11] px-4 py-2 rounded-full border border-gray-800">
                                         <button onClick={() => { updateCartAmount(index, -1); reload(); }} className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#FF6600] hover:text-black transition">
@@ -108,7 +108,7 @@ export default function Cart() {
                     </div>
                     <div className="flex justify-between items-center mb-8 pb-6 border-b border-gray-800">
                         <span className="text-gray-400">Tổng cộng:</span>
-                        <span className="font-bold text-[#FF6600] text-3xl">${total.toFixed(2)}</span>
+                        <span className="font-bold text-[#FF6600] text-3xl">{formatCurrency(total)}</span>
                     </div>
                     <form onSubmit={handleCheckout} className="space-y-5">
                         <div>

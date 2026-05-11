@@ -89,7 +89,7 @@
                         <h3 class="text-xl font-bold mb-2 group-hover:text-[#FF6600] transition line-clamp-1">{{ $item->name }}</h3>
                         <p class="text-gray-400 text-sm mb-4 line-clamp-1">{{ $item->desc }}</p>
                         <div class="flex justify-between items-center mt-auto">
-                            <span class="font-bold text-lg">${{ number_format($item->price, 2) }}</span>
+                            <span class="font-bold text-lg">{{ number_format($item->price, 0, ',', '.') }} đ</span>
                             <button onclick="addToCart({{ $item->id }}, '{{ addslashes($item->name) }}', {{ $item->price }}, '{{ $trendingUrl }}')" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#FF6600] hover:text-black transition">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                             </button>
@@ -117,7 +117,7 @@
                             <h3 class="font-bold mb-2 line-clamp-1">{{ $special->name }}</h3>
                             <p class="text-gray-400 text-xs mb-6 line-clamp-2">{{ $special->desc }}</p>
                             <div class="mt-auto flex justify-between items-center">
-                                <span class="text-[#FF6600] font-bold text-lg">${{ number_format($special->price, 2) }}</span>
+                                <span class="text-[#FF6600] font-bold text-lg">{{ number_format($special->price, 0, ',', '.') }} đ</span>
                                 <button onclick="addToCart({{ $special->id }}, '{{ addslashes($special->name) }}', {{ $special->price }}, '{{ $specialUrl }}')" class="w-10 h-10 bg-gray-800 hover:bg-[#FF6600] hover:text-black text-white font-semibold rounded-full transition flex justify-center items-center group-hover:rotate-90">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                                 </button>

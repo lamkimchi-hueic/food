@@ -66,16 +66,16 @@
                                         <span class="font-bold">{{ $item->product->name }}</span>
                                     </div>
                                 </td>
-                                <td class="px-8 py-6 text-gray-400">${{ number_format($item->product->price, 2) }}</td>
+                                <td class="px-8 py-6 text-gray-400">{{ number_format($item->product->price, 0, ',', '.') }} đ</td>
                                 <td class="px-8 py-6 text-gray-400">x{{ $item->amount }}</td>
-                                <td class="px-8 py-6 text-right font-bold text-white">${{ number_format($subtotal, 2) }}</td>
+                                <td class="px-8 py-6 text-right font-bold text-white">{{ number_format($subtotal, 0, ',', '.') }} đ</td>
                             </tr>
                             @endforeach
                         </tbody>
                         <tfoot>
                             <tr class="bg-black/20">
                                 <td colspan="3" class="px-8 py-6 text-right text-gray-400 font-bold">Grand Total</td>
-                                <td class="px-8 py-6 text-right text-2xl font-black text-[#FF6600]">${{ number_format($grandTotal, 2) }}</td>
+                                <td class="px-8 py-6 text-right text-2xl font-black text-[#FF6600]">{{ number_format($grandTotal, 0, ',', '.') }} đ</td>
                             </tr>
                         </tfoot>
                     </table>

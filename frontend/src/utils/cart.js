@@ -40,6 +40,10 @@ export function clearCart() {
     window.dispatchEvent(new Event('cart-updated'));
 }
 
+export function formatCurrency(value) {
+    return parseFloat(value || 0).toLocaleString('vi-VN') + ' đ';
+}
+
 export function getImageUrl(item) {
     const FALLBACK = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000&auto=format&fit=crop';
 

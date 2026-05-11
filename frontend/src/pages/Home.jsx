@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ToastContainer, { toast } from '../components/Toast';
 import api from '../api';
-import { addToCart, getImageUrl } from '../utils/cart';
+import { addToCart, getImageUrl, formatCurrency } from '../utils/cart';
 
 export default function Home() {
     const [trending, setTrending] = useState([]);
@@ -87,7 +87,7 @@ export default function Home() {
                                     <h3 className="text-xl font-bold mb-2 group-hover:text-[#FF6600] transition line-clamp-1">{item.name}</h3>
                                     <p className="text-gray-400 text-sm mb-4 line-clamp-1">{item.desc}</p>
                                     <div className="flex justify-between items-center mt-auto">
-                                        <span className="font-bold text-lg">${parseFloat(item.price).toFixed(2)}</span>
+                                        <span className="font-bold text-lg">{formatCurrency(item.price)}</span>
                                         <button onClick={() => handleAdd(item)} className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#FF6600] hover:text-black transition">
                                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
                                         </button>
@@ -116,7 +116,7 @@ export default function Home() {
                                         <h3 className="font-bold mb-2 line-clamp-1">{s.name}</h3>
                                         <p className="text-gray-400 text-xs mb-6 line-clamp-2">{s.desc}</p>
                                         <div className="mt-auto flex justify-between items-center">
-                                            <span className="text-[#FF6600] font-bold text-lg">${parseFloat(s.price).toFixed(2)}</span>
+                                            <span className="text-[#FF6600] font-bold text-lg">{formatCurrency(s.price)}</span>
                                             <button onClick={() => handleAdd(s)} className="w-10 h-10 bg-gray-800 hover:bg-[#FF6600] hover:text-black text-white font-semibold rounded-full transition flex justify-center items-center group-hover:rotate-90">
                                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
                                             </button>

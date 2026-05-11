@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../api';
+import { formatCurrency } from '../../utils/cart';
 import {
     BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer,
     PieChart, Pie, Cell, Legend, LineChart, Line, Area, AreaChart
@@ -110,8 +111,8 @@ export default function AdminAnalytics() {
                                         <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                                         <XAxis type="number" tick={{ fill: '#9CA3AF' }} />
                                         <YAxis type="category" dataKey="category_name" tick={{ fill: '#9CA3AF', fontSize: 12 }} width={80} />
-                                        <Tooltip contentStyle={{ backgroundColor: '#1A1A1E', border: '1px solid #333', borderRadius: '12px', color: '#fff' }} formatter={(val) => `$${val}`} />
-                                        <Bar dataKey="total_revenue" fill="#10B981" name="Doanh thu ($)" radius={[0, 8, 8, 0]} />
+                                        <Tooltip contentStyle={{ backgroundColor: '#1A1A1E', border: '1px solid #333', borderRadius: '12px', color: '#fff' }} formatter={(val) => formatCurrency(val)} />
+                                        <Bar dataKey="total_revenue" fill="#10B981" name="Doanh thu (vnđ)" radius={[0, 8, 8, 0]} />
                                     </BarChart>
                                 </ResponsiveContainer>
                             </section>
@@ -164,8 +165,8 @@ export default function AdminAnalytics() {
                                                 <td className="py-3 px-4 text-gray-400">@{c.username}</td>
                                                 <td className="py-3 px-4 text-right font-bold">{c.total_orders}</td>
                                                 <td className="py-3 px-4 text-right font-bold text-[#FF6600]">{c.total_items}</td>
-                                                <td className="py-3 px-4 text-right font-bold text-[#10B981]">${parseFloat(c.avg_order_value || 0).toFixed(2)}</td>
-                                                <td className="py-3 px-4 text-right font-bold text-[#10B981]">${parseFloat(c.total_revenue || 0).toFixed(2)}</td>
+                                                <td className="py-3 px-4 text-right font-bold text-[#10B981]">{formatCurrency(c.avg_order_value)}</td>
+                                                <td className="py-3 px-4 text-right font-bold text-[#10B981]">{formatCurrency(c.total_revenue)}</td>
                                                 <td className="py-3 px-4 text-right text-xs text-gray-500">{c.last_order_at || '---'}</td>
                                             </tr>
                                         ))}
