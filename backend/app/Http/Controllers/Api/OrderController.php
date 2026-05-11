@@ -38,11 +38,11 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'name' => 'required|string|max:45',
+            'user_id' => 'sometimes|exists:users,id',
+            'name' => 'sometimes|string|max:45',
             'desc' => 'nullable|string|max:45',
             'status' => 'nullable|integer',
-            'receiver' => 'required|string|max:45',
+            'receiver' => 'sometimes|string|max:45',
         ]);
 
         $order->update($validated);

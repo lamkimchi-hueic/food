@@ -8,6 +8,7 @@ export default function AdminOrders() {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
+    const [filterStatus, setFilterStatus] = useState('all');
 
     useEffect(() => {
         if (!user || user.role !== 1) { navigate('/'); return; }
@@ -40,6 +41,10 @@ export default function AdminOrders() {
     const statusLabels = { 0: 'Đang chờ', 1: 'Đã xác nhận', 2: 'Đã giao hàng', 3: 'Đã hủy' };
     const statusColors = { 0: 'text-yellow-500 bg-yellow-500/10 border-yellow-500/20', 1: 'text-blue-500 bg-blue-500/10 border-blue-500/20', 2: 'text-green-500 bg-green-500/10 border-green-500/20', 3: 'text-red-500 bg-red-500/10 border-red-500/20' };
 
+    const filteredOrders = filterStatus === 'all' 
+        ? orders 
+        : orders.filter(o => o.status === parseInt(filterStatus));
+
     return (
         <div className="flex flex-col min-h-screen font-sans">
             <nav className="flex items-center justify-between px-10 py-6 max-w-7xl mx-auto w-full border-b border-gray-800">
@@ -51,16 +56,33 @@ export default function AdminOrders() {
             </nav>
 
             <main className="flex-grow max-w-7xl mx-auto px-10 py-12 w-full">
-                <h1 className="text-3xl font-bold mb-8">Quản lý <span className="text-[#FF6600]">Đơn hàng</span></h1>
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+                    <h1 className="text-3xl font-bold">Quản lý <span className="text-[#FF6600]">Đơn hàng</span></h1>
+                    <div className="flex items-center space-x-4">
+                        <span className="text-gray-400 text-sm">Lọc theo:</span>
+                        <select 
+                            value={filterStatus} 
+                            onChange={(e) => setFilterStatus(e.target.value)}
+                            className="bg-[#1A1A1E] border border-gray-800 text-white rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-[#FF6600] transition"
+                        >
+                            <option value="all">Tất cả</option>
+                            <option value="0">Đang chờ</option>
+                            <option value="1">Đã xác nhận</option>
+                            <option value="2">Đã giao hàng</option>
+                            <option value="3">Đã hủy</option>
+                        </select>
+                    </div>
+                </div>
 
                 <div className="space-y-4">
-                    {orders.length === 0 && <p className="text-gray-400 text-center py-10">Chưa có đơn hàng nào.</p>}
-                    {orders.map((order) => (
+                    {filteredOrders.length === 0 && <p className="text-gray-400 text-center py-10">Không tìm thấy đơn hàng nào.</p>}
+                    {filteredOrders.map((order) => (
                         <div key={order.id} className="bg-[#1A1A1E] p-6 rounded-2xl border border-gray-800">
                             <div className="flex items-center justify-between mb-4">
                                 <div>
                                     <h3 className="font-bold text-lg">Đơn hàng #{order.id}</h3>
-                                    <p className="text-gray-400 text-sm">Người nhận: {order.receiver} &bull; Người dùng: {order.user?.name || 'N/A'}</p>
+                                    <p className="text-gray-400 text-sm">Người nhận: {order.receiver} &bull; SĐT: {order.phone} &bull; Người dùng: {order.user?.name || 'N/A'}</p>
+                                    <p className="text-gray-500 text-xs mt-1">Địa chỉ: {order.address}</p>
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <select
