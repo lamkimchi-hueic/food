@@ -25,7 +25,11 @@ class ProductController extends Controller
         }
 
         if ($request->has('search') && $request->search != '') {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $searchTerm = '%' . $request->search . '%';
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'ilike', $searchTerm)
+                  ->orWhere('desc', 'ilike', $searchTerm);
+            });
         }
 
         if ($request->has('random')) {
